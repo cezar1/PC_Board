@@ -1,16 +1,17 @@
 
-module hex_hole(h_trap,h_hole,r_trap,r_hole,x,y,z)
+module hex_hole(h_trap,h_hole,r_trap,r_hole,rot)
 {
-translate([x,y,z+h_hole])
+    rotate([rot,0,0]) {
+translate([0,0,h_hole])
 {
 	cylinder(h = h_trap, r = r_trap, $fn = 6);
 }
-translate([x,y,z])
-{
-	cylinder(h = h_hole, r = r_hole, $fn = 20);
-}
-}
 
+	cylinder(h = h_hole, r = r_hole, $fn = 20);
+
+}
+}
+/*
 width=18;
 length=60;
 h_hole=2;
@@ -40,3 +41,4 @@ hex_hole(h_trap,h_hole,r_trap+3,r_hole,width/2,50,0);
 }
 }
 
+*/
