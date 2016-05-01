@@ -6,9 +6,9 @@ module hex_hole(h_trap,h_hole,r_trap,r_hole,rot)
     
     
     local_r_trap=make_r_for_screw_standard(r_trap);
-    echo(r_trap);
     
-    echo(local_r_trap);
+    
+    
     rotate([rot,0,0]) {
 translate([0,0,h_hole])
 {
@@ -19,34 +19,40 @@ translate([0,0,h_hole])
 
 }
 }
-/*
-width=18;
-length=60;
-h_hole=2;
-h_trap=4;
-r_trap=3;
-r_hole=2;
-spacer=4;
-explode=false;
-if (explode)
+module hex_hole_fill_bottom(h_trap,h_hole,r_trap,r_hole,rot)
 {
-cube(size = [width,length,h_hole+h_trap], center = false);
-translate([0,0,10]){
-hex_hole(h_trap,h_hole,r_trap,r_hole,width/2,4,0);
-hex_hole(h_trap,h_hole,r_trap+1,r_hole,width/2,12,0);
-hex_hole(h_trap,h_hole,r_trap+2,r_hole,width/2,22,0);
-hex_hole(h_trap,h_hole,r_trap+3,r_hole,width/2,33,0);}
-}
-else
+    
+    
+    local_r_trap=make_r_for_screw_standard(r_trap);
+    
+    
+    
+    rotate([rot,0,0]) {
+translate([0,0,h_hole-0.3])
 {
-difference() {
-cube(size = [width,length,h_hole+h_trap], center = false);
-hex_hole(h_trap,h_hole,r_trap-0.5,r_hole,width/2,5,0);
-hex_hole(h_trap,h_hole,r_trap,r_hole,width/2,13,0);
-hex_hole(h_trap,h_hole,r_trap+1,r_hole,width/2,23,0);
-hex_hole(h_trap,h_hole,r_trap+2,r_hole,width/2,36,0);
-hex_hole(h_trap,h_hole,r_trap+3,r_hole,width/2,50,0);
-}
+	cylinder(h = 0.3, r = local_r_trap, $fn = 6);
 }
 
+	
+
+}
+}
+module hex_hole_fill_top(h_trap,h_hole,r_trap,r_hole,rot)
+{
+    
+    
+    local_r_trap=make_r_for_screw_standard(r_trap);
+    rotate([rot,0,0]) {
+
+
+	cylinder(h = 0.3, r = r_hole, $fn = 20);
+
+}
+}
+/*
+nut_height=2.5;
+base_height=7;
+screw_standard=3;
+screw_hole=2;
+hex_hole_fill_bottom(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
 */
