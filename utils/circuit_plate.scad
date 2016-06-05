@@ -48,6 +48,24 @@ module box()
     translate([-base_length/2-base_padding,-base_width/2-base_padding,0])
     cube(size=[base_length+base_padding*2,base_width+base_padding*2,base_trap_height],center=false);
 }
+module extrusions()
+{
+
+    difference(){
+        translate([-base_length/2+base_padding,-base_width/2+base_padding,0])
+        cube(size=[base_length-base_padding*2,base_width-base_padding*2,base_trap_height],center=false);
+        union(){
+            translate([-CIRCUIT_BOARD_ADAPTER0_SPACING/2-base_padding,-CIRCUIT_BOARD_ADAPTER0_SPACING/2-base_padding,0])
+            cube(size=[CIRCUIT_BOARD_ADAPTER0_SPACING+base_padding*2,CIRCUIT_BOARD_ADAPTER0_SPACING+base_padding*2,base_trap_height],center=false);
+            translate([-base_length/2-base_padding,-CIRCUIT_BOARD_ADAPTER0_PLUS_WIDTH/2,0])
+            cube(size=[base_length+base_padding*2,CIRCUIT_BOARD_ADAPTER0_PLUS_WIDTH,base_trap_height],center=false);
+            translate([-base_length/2-base_padding,-CIRCUIT_BOARD_ADAPTER0_PLUS_WIDTH/2,0])
+            cube(size=[base_length+base_padding*2,CIRCUIT_BOARD_ADAPTER0_PLUS_WIDTH,base_trap_height],center=false);
+            translate([-CIRCUIT_BOARD_ADAPTER0_PLUS_WIDTH/2,-base_width/2-base_padding,0])
+            cube(size=[CIRCUIT_BOARD_ADAPTER0_PLUS_WIDTH,base_width+base_padding*2,base_trap_height],center=false);
+        }
+    }
+}
 module circuit_plate(base_length,base_width,base_padding,pcb_thickness,base_trap_height,screw_height)
 {
 base_height=screw_height-pcb_thickness;    
@@ -58,6 +76,9 @@ difference(){
         box();
         pillars(base_height);
         }
+    union(){    
+        extrusions();
         traps(base_height,base_hole_height);
+    }
 }
 }
