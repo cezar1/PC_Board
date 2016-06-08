@@ -1,6 +1,4 @@
 include <utils/circuit_plate.scad>;
-
-screw_standard0=2;
 base_length=83;
 base_width=58;
 base_padding=5;
