@@ -1,5 +1,6 @@
-include <hex_trap.scad>;
 include <../configuration/general.scad>;
+include <hex_trap.scad>;
+
 module adapter0(height)
 {
     local_length=CIRCUIT_BOARD_ADAPTER0_BASE_WIDTH;
@@ -12,6 +13,7 @@ module adapter0(height)
         }
         union()
         {
+            
     translate([CIRCUIT_BOARD_ADAPTER0_SPACING/2,CIRCUIT_BOARD_ADAPTER0_SPACING/2,0])
 hex_hole(0,height,CIRCUIT_BOARD_SCREWSTANDARD0,0);
 translate([CIRCUIT_BOARD_ADAPTER0_SPACING/2,-CIRCUIT_BOARD_ADAPTER0_SPACING/2,0])

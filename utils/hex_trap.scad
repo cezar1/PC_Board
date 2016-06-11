@@ -4,17 +4,19 @@ function make_r_for_screw_standard(r_trap) =
 //((r_trap==2) ? 2.2 : (r_trap==2.5) ? 2.5 : (r_trap==3) ? 3.2 : (r_trap==4) ? 4.2 : r_trap);
 
 function make_r_hole_for_screw_standard(r_trap) =
-((r_trap==2) ? 1.5 : (r_trap==2.5) ? 2 : (r_trap==3) ? 2 : (r_trap==4) ? 2.5 : r_trap);
+((r_trap==2) ? 1 : (r_trap==2.5) ? 1.5 : (r_trap==3) ? 1.5 : (r_trap==4) ? 2.5 : r_trap);
 //Ultimaker2 @ ESOC
 //((r_trap==2) ? 1.5 : (r_trap==2.5) ? 2 : (r_trap==3) ? 2 : (r_trap==4) ? 2.5 : r_trap);
 
 module hex_hole(h_trap,h_hole,r_trap,rot)
 {
     
-    
+    echo("hex_hole h_trap[",h_trap,"]");
+    echo("hex_hole h_hole[",h_hole,"]");
     local_r_trap=make_r_for_screw_standard(r_trap);
+    echo("hex_hole r_trap[",r_trap,"]");
     local_r_hole=make_r_hole_for_screw_standard(r_trap);
-    
+    echo("hex_hole local_r_hole[",local_r_hole,"]");
     
     rotate([rot,0,0]) {
 translate([0,0,h_hole])
