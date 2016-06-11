@@ -1,4 +1,5 @@
 include <configuration/general.scad>;
+use <back_plate.scad>;
 include <utils/hex_trap.scad>;
 
 
@@ -8,16 +9,16 @@ layer1_height=1.5;
 layer2_length=166;
 layer2_width=101;
 
-screw_standard=3;//M3
+screw_standard=SCREW_STANDARD_M3;//M3
 screw_hole=2;
 nut_height=2.5;
 
-gap_mainscrews=3;
+gap_mainscrews=GAP_MAINSCREWS_HDMI;
 base_height=7;
-base_outerpad=2;
+base_outerpad=BASE_OUTERPAD_HDMI;
 trim1_length=5;
 trim1_width=5;
-base_back_height=2;
+
 base_back_content_height=20;
 
 left_size_top=55;
@@ -116,8 +117,9 @@ module base_traps()
 }
 module base_back()
 {
-    translate([0,0,base_height+base_back_height/2+base_back_content_height+explode*70]) cube(size = [HDMI_HOLES_LENGTH+2*(screw_standard),HDMI_HOLES_WIDTH+2*(screw_standard*3+gap_mainscrews+base_outerpad),base_back_height], center = true); 
     
+    translate([0,0,base_height+BACK_PLATE_THICKNESS/2+base_back_content_height+explode*70])  
+    back_plate();
     
 }
 
