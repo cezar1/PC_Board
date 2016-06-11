@@ -1,7 +1,7 @@
+include <configuration/general.scad>;
 include <utils/hex_trap.scad>;
 
-hdmi_length=157;
-hdmi_width=108;
+
 layer1_length=162;
 layer1_width=97;
 layer1_height=1.5;
@@ -27,8 +27,8 @@ join_length=15;
 
 explode=0;
 
-base_length=hdmi_length+2*(screw_standard*3+gap_mainscrews+base_outerpad);
-base_width=hdmi_width+2*(screw_standard*3+gap_mainscrews+base_outerpad);
+base_length=HDMI_HOLES_LENGTH+2*(screw_standard*3+gap_mainscrews+base_outerpad);
+base_width=HDMI_HOLES_WIDTH+2*(screw_standard*3+gap_mainscrews+base_outerpad);
 module base_cube()
 {
   
@@ -87,36 +87,36 @@ module base_trims()
     color([0,0,1])
     
     /*
-    translate([hdmi_length/2+screw_standard*2+gap_mainscrews/2+base_outerpad/2+trim1_length/2,hdmi_width/2+screw_standard*2+gap_mainscrews/2+base_outerpad/2+trim1_width/2,base_height/2+7*explode]) cube(size = [trim1_length,trim1_width,base_height], center = true);*/
-    translate([0,hdmi_width/2-10,base_height/2+1+7*explode]) cube([35,20,base_height],center=true);
-    translate([-hdmi_length/2+72.5,hdmi_width/2-10,base_height/2+7*explode]) cube([18,20,base_height],center=true);
+    translate([HDMI_HOLES_LENGTH/2+screw_standard*2+gap_mainscrews/2+base_outerpad/2+trim1_length/2,HDMI_HOLES_WIDTH/2+screw_standard*2+gap_mainscrews/2+base_outerpad/2+trim1_width/2,base_height/2+7*explode]) cube(size = [trim1_length,trim1_width,base_height], center = true);*/
+    translate([0,HDMI_HOLES_WIDTH/2-10,base_height/2+1+7*explode]) cube([35,20,base_height],center=true);
+    translate([-HDMI_HOLES_LENGTH/2+72.5,HDMI_HOLES_WIDTH/2-10,base_height/2+7*explode]) cube([18,20,base_height],center=true);
 }
 module base_traps()
 {
     color([0,1,0]){
-            translate([hdmi_length/2,hdmi_width/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
-            translate([hdmi_length/2+screw_standard*2+gap_mainscrews,hdmi_width/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
-            translate([hdmi_length/2,hdmi_width/2+screw_standard*2+gap_mainscrews,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([HDMI_HOLES_LENGTH/2+screw_standard*2+gap_mainscrews,HDMI_HOLES_WIDTH/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2+screw_standard*2+gap_mainscrews,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
         
-            translate([hdmi_length/2,-hdmi_width/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
-            translate([hdmi_length/2+screw_standard*2+gap_mainscrews,-hdmi_width/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
-            translate([hdmi_length/2,-(hdmi_width/2+screw_standard*2+gap_mainscrews),base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([HDMI_HOLES_LENGTH/2,-HDMI_HOLES_WIDTH/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([HDMI_HOLES_LENGTH/2+screw_standard*2+gap_mainscrews,-HDMI_HOLES_WIDTH/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([HDMI_HOLES_LENGTH/2,-(HDMI_HOLES_WIDTH/2+screw_standard*2+gap_mainscrews),base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
         
-            translate([-hdmi_length/2,hdmi_width/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
-            translate([-(hdmi_length/2+screw_standard*2+gap_mainscrews),hdmi_width/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
-            translate([-hdmi_length/2,-(hdmi_width/2+screw_standard*2+gap_mainscrews),base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([-HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([-(HDMI_HOLES_LENGTH/2+screw_standard*2+gap_mainscrews),HDMI_HOLES_WIDTH/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([-HDMI_HOLES_LENGTH/2,-(HDMI_HOLES_WIDTH/2+screw_standard*2+gap_mainscrews),base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
         
-            translate([-hdmi_length/2,-hdmi_width/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
-            translate([-(hdmi_length/2+screw_standard*2+gap_mainscrews),-hdmi_width/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
-            translate([-hdmi_length/2,+(hdmi_width/2+screw_standard*2+gap_mainscrews),base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([-HDMI_HOLES_LENGTH/2,-HDMI_HOLES_WIDTH/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([-(HDMI_HOLES_LENGTH/2+screw_standard*2+gap_mainscrews),-HDMI_HOLES_WIDTH/2,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([-HDMI_HOLES_LENGTH/2,+(HDMI_HOLES_WIDTH/2+screw_standard*2+gap_mainscrews),base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
             }
             
-            translate([base_length/2-left_size_bottom-join_length/2,-hdmi_width/2-gap_mainscrews,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
-            translate([base_length/2-left_size_top-join_length/2,+hdmi_width/2+gap_mainscrews,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([base_length/2-left_size_bottom-join_length/2,-HDMI_HOLES_WIDTH/2-gap_mainscrews,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([base_length/2-left_size_top-join_length/2,+HDMI_HOLES_WIDTH/2+gap_mainscrews,base_height+50*explode]) hex_hole(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
 }
 module base_back()
 {
-    translate([0,0,base_height+base_back_height/2+base_back_content_height+explode*70]) cube(size = [hdmi_length+2*(screw_standard),hdmi_width+2*(screw_standard*3+gap_mainscrews+base_outerpad),base_back_height], center = true); 
+    translate([0,0,base_height+base_back_height/2+base_back_content_height+explode*70]) cube(size = [HDMI_HOLES_LENGTH+2*(screw_standard),HDMI_HOLES_WIDTH+2*(screw_standard*3+gap_mainscrews+base_outerpad),base_back_height], center = true); 
     
     
 }
@@ -145,7 +145,7 @@ module hdmi_plate()
                     base_traps();
                     base_trims();
                 }
-           //base_back();
+           base_back();
         }
     
 }
@@ -168,16 +168,16 @@ module right_piece()
                 
            base_right1();}
            
-translate([base_length/2-left_size_bottom-join_length/2,-hdmi_width/2-gap_mainscrews,base_height+50*explode]) hex_hole_fill_bottom(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
-            translate([base_length/2-left_size_top-join_length/2,+hdmi_width/2+gap_mainscrews,base_height+50*explode]) hex_hole_fill_bottom(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+translate([base_length/2-left_size_bottom-join_length/2,-HDMI_HOLES_WIDTH/2-gap_mainscrews,base_height+50*explode]) hex_hole_fill_bottom(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
+            translate([base_length/2-left_size_top-join_length/2,+HDMI_HOLES_WIDTH/2+gap_mainscrews,base_height+50*explode]) hex_hole_fill_bottom(nut_height,base_height-nut_height,screw_standard,screw_hole,180);
 }
 //left_piece();
-right_piece();
-//hdmi_plate();
+//right_piece();
+hdmi_plate();
 /*
 intersection()
 {
 hdmi_plate();
-translate([hdmi_length/2-15,hdmi_width/2-20,0]) cube([50,50,20]);    
+translate([HDMI_HOLES_LENGTH/2-15,HDMI_HOLES_WIDTH/2-20,0]) cube([50,50,20]);    
 }
 */
