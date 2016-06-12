@@ -1,6 +1,6 @@
 include <utils/circuit_plate.scad>;
-base_length=85;
-base_width=56;
+base_length=58;
+base_width=49;
 base_padding=5;
 pcb_thickness=1.6;
 screw_height=10;
