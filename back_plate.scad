@@ -54,20 +54,18 @@ module back_plate()
                     }
                 }
                 {
-                    translate([HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI,-BACK_PLATE_THICKNESS/2])
+                    translate([local_length/2-SCREW_BLOCK_SIZE/2,local_width/2-SCREW_BLOCK_SIZE/2,-BACK_PLATE_THICKNESS/2])
                             hex_hole(h_trap=0,h_hole=BACK_PLATE_THICKNESS,r_trap=SCREW_STANDARD_M3,rot=0);
-                    translate([HDMI_HOLES_LENGTH/2-SCREW_BLOCK_SIZE/2,HDMI_HOLES_WIDTH/2+SCREW_BLOCK_SIZE/2,-BACK_PLATE_THICKNESS/2])
+                    translate([local_length/2-SCREW_BLOCK_SIZE/2,-local_width/2+SCREW_BLOCK_SIZE/2,-BACK_PLATE_THICKNESS/2])
                             hex_hole(h_trap=0,h_hole=BACK_PLATE_THICKNESS,r_trap=SCREW_STANDARD_M3,rot=0);
-                    translate([-HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI,-BACK_PLATE_THICKNESS/2])
+                    translate([-local_length/2+SCREW_BLOCK_SIZE/2,local_width/2-SCREW_BLOCK_SIZE/2,-BACK_PLATE_THICKNESS/2])
                             hex_hole(h_trap=0,h_hole=BACK_PLATE_THICKNESS,r_trap=SCREW_STANDARD_M3,rot=0);
-                    translate([HDMI_HOLES_LENGTH/2,-(HDMI_HOLES_WIDTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI),-BACK_PLATE_THICKNESS/2])
-                            hex_hole(h_trap=0,h_hole=BACK_PLATE_THICKNESS,r_trap=SCREW_STANDARD_M3,rot=0);
-                    translate([-HDMI_HOLES_LENGTH/2,-(HDMI_HOLES_WIDTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI),-BACK_PLATE_THICKNESS/2])
+                    translate([-local_length/2+SCREW_BLOCK_SIZE/2,-local_width/2+SCREW_BLOCK_SIZE/2,-BACK_PLATE_THICKNESS/2])
                             hex_hole(h_trap=0,h_hole=BACK_PLATE_THICKNESS,r_trap=SCREW_STANDARD_M3,rot=0);
                 }
         }
     }
-    translate([BACK_PLATE_RPI_BOARD_X,BACK_PLATE_RPI_BOARD_Y,0]) {adapter0(BACK_PLATE_ADAPTER0_THICKNESS);translate([0,-BACK_PLATE_RPI_BOARD_Y,BACK_PLATE_THICKNESS/2]) cube([5,local_width,BACK_PLATE_THICKNESS],center=true);}
-    translate([BACK_PLATE_SENSORBOARD_X,BACK_PLATE_SENSORBOARD_Y,0]) {adapter0(BACK_PLATE_ADAPTER0_THICKNESS);translate([0,-BACK_PLATE_RPI_BOARD_Y,BACK_PLATE_THICKNESS/2]) cube([5,local_width,BACK_PLATE_THICKNESS],center=true);}
+    translate([BACK_PLATE_RPI_BOARD_X,BACK_PLATE_RPI_BOARD_Y,0]) {adapter0(BACK_PLATE_ADAPTER0_THICKNESS);translate([0,-BACK_PLATE_RPI_BOARD_Y,BACK_PLATE_THICKNESS/2]) cube([BACK_PLATE_WALL,local_width,BACK_PLATE_THICKNESS],center=true);}
+    translate([BACK_PLATE_SENSORBOARD_X,BACK_PLATE_SENSORBOARD_Y,0]) {adapter0(BACK_PLATE_ADAPTER0_THICKNESS);translate([0,-BACK_PLATE_RPI_BOARD_Y,BACK_PLATE_THICKNESS/2]) cube([BACK_PLATE_WALL,local_width,BACK_PLATE_THICKNESS],center=true);}
 }
 back_plate();
