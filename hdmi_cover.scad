@@ -18,7 +18,7 @@ base_outerpad=BASE_OUTERPAD_HDMI;
 trim1_length=5;
 trim1_width=5;
 
-base_back_content_height=0;
+base_back_content_height=PILLARS_HEIGHT;
 
 left_size_top=55;
 left_size_bottom=100;
@@ -151,7 +151,7 @@ module hdmi_plate()
                     }
                 }
                 
-           //base_back();
+           base_back();
         }
     
 }
@@ -179,7 +179,7 @@ translate([base_length/2-left_size_bottom-join_length/2,-HDMI_HOLES_WIDTH/2-gap_
 }
 //left_piece();
 //right_piece();
-intersection(){
+//intersection(){
 hdmi_plate();
-    translate([base_length/2,base_width/2,0]) cube(50,center=true);
-}
+//    translate([base_length/2,base_width/2,0]) cube(50,center=true);
+//}
