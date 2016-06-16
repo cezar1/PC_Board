@@ -1,7 +1,7 @@
 include <configuration/general.scad>;
 use <back_plate.scad>;
 include <utils/hex_trap.scad>;
-
+use <utils/pillar.scad>;
 
 layer1_length=163;
 layer1_width=98;
@@ -152,6 +152,7 @@ module hdmi_plate()
                 }
                 
            base_back();
+           color([1,0,0])translate([0,0,base_height])base_pillars();
         }
     
 }
