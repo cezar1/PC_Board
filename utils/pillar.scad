@@ -94,17 +94,20 @@ local_width=HDMI_HOLES_WIDTH;
 }
 module base_pillars()
 {
-local_length=HDMI_HOLES_LENGTH+GAP_MAINSCREWS_HDMI*2+SCREW_STANDARD_M3*4;
-local_width=HDMI_HOLES_WIDTH;
-    
-translate([0,0,PILLARS_HEIGHT/2]){
-translate([HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2,0]) /*rotate([0,0,90])*/
-pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=PILLARS_BOTTOM_OFFSET_X,offset_bottom_y=PILLARS_BOTTOM_OFFSET_Y,offset_top_x=PILLARS_TOP_OFFSET_X,offset_top_y=PILLARS_TOP_OFFSET_Y,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH);
-translate([-HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2,0]) rotate([0,0,90])
-pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH);
-translate([HDMI_HOLES_LENGTH/2,-HDMI_HOLES_WIDTH/2,0]) rotate([0,0,-90])
-pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH);
-translate([-HDMI_HOLES_LENGTH/2,-HDMI_HOLES_WIDTH/2,0]) rotate([0,0,-180])
-pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH);
-}}
+    translate([0,0,HDMI_COVER_HEIGHT]){
+        local_length=HDMI_HOLES_LENGTH+GAP_MAINSCREWS_HDMI*2+SCREW_STANDARD_M3*4;
+        local_width=HDMI_HOLES_WIDTH;
+            
+        translate([0,0,PILLARS_HEIGHT/2]){
+        translate([HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2,0]) /*rotate([0,0,90])*/
+        pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=PILLARS_BOTTOM_OFFSET_X,offset_bottom_y=PILLARS_BOTTOM_OFFSET_Y,offset_top_x=PILLARS_TOP_OFFSET_X,offset_top_y=PILLARS_TOP_OFFSET_Y,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH);
+        translate([-HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2,0]) rotate([0,0,90])
+        pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH);
+        translate([HDMI_HOLES_LENGTH/2,-HDMI_HOLES_WIDTH/2,0]) rotate([0,0,-90])
+        pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH);
+        translate([-HDMI_HOLES_LENGTH/2,-HDMI_HOLES_WIDTH/2,0]) rotate([0,0,-180])
+        pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH);
+        }
+    }
+}
 single_pillar();

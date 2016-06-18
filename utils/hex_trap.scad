@@ -11,12 +11,12 @@ function make_r_hole_for_screw_standard(r_trap) =
 module hex_hole(h_trap,h_hole,r_trap,rot)
 {
     
-    echo("hex_hole h_trap[",h_trap,"]");
-    echo("hex_hole h_hole[",h_hole,"]");
+    //echo("hex_hole h_trap[",h_trap,"]");
+    //echo("hex_hole h_hole[",h_hole,"]");
     local_r_trap=make_r_for_screw_standard(r_trap);
-    echo("hex_hole r_trap[",r_trap,"]");
+    //echo("hex_hole r_trap[",r_trap,"]");
     local_r_hole=make_r_hole_for_screw_standard(r_trap);
-    echo("hex_hole local_r_hole[",local_r_hole,"]");
+    //echo("hex_hole local_r_hole[",local_r_hole,"]");
     
     rotate([rot,0,0]) {
 translate([0,0,h_hole])
@@ -30,6 +30,18 @@ translate([0,0,h_hole])
 }
 module hex_hole_exit(h_trap,h_hole,r_trap,rot,l_exit,rot_exit)
 {
+    hex_hole(h_trap,h_hole,r_trap,rot);
+    rotate([rot,0,0]) translate([0,r_trap,h_hole]) rotate([0,0,rot_exit]) cube([l_exit,r_trap*2,h_trap]);
+    
+}
+module hex_hole_exit_tunnel(h_trap,h_hole,r_trap,rot,l_exit,rot_exit,l_tunnel)
+{
+    rotate([rot,0,0]) {
+        translate([0,0,h_trap+h_hole])
+        {
+            cylinder(h = l_tunnel, r = make_r_hole_for_screw_standard(r_trap), $fn = 20);
+        }
+    }
     hex_hole(h_trap,h_hole,r_trap,rot);
     rotate([rot,0,0]) translate([0,r_trap,h_hole]) rotate([0,0,rot_exit]) cube([l_exit,r_trap*2,h_trap]);
     
