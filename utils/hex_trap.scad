@@ -31,7 +31,7 @@ translate([0,0,h_hole])
 module hex_hole_exit(h_trap,h_hole,r_trap,rot,l_exit,rot_exit)
 {
     hex_hole(h_trap,h_hole,r_trap,rot);
-    translate([0,r_trap,h_hole])rotate([0,0,rot_exit]){cube([l_exit,r_trap*2,h_trap]);}
+    rotate([rot,0,0]) translate([0,r_trap,h_hole]) rotate([0,0,rot_exit]) cube([l_exit,r_trap*2,h_trap]);
     
 }
 module hex_hole_fill_bottom(h_trap,h_hole,r_trap,r_hole,rot)

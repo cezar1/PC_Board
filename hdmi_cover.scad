@@ -97,8 +97,8 @@ module base_traps()
     local_hole_height=base_height-nut_height+FRONT_COVER_TRAPS_TOLERANCE;
     color([0,1,0]){
             translate([HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2,base_height+FRONT_COVER_TRAPS_TOLERANCE+0*explode]) hex_hole(h_trap=local_nut_height,h_hole=local_hole_height,r_trap=screw_standard,rot=180);
-            translate([HDMI_HOLES_LENGTH/2+screw_standard*2+gap_mainscrews,HDMI_HOLES_WIDTH/2,base_height+FRONT_COVER_TRAPS_TOLERANCE+50*explode]) hex_hole(h_trap=local_nut_height,h_hole=local_hole_height,r_trap=screw_standard,rot=180);
-            translate([HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2+screw_standard*2+gap_mainscrews,base_height+FRONT_COVER_TRAPS_TOLERANCE+50*explode]) hex_hole(h_trap=local_nut_height,h_hole=local_hole_height,r_trap=screw_standard,rot=180);
+            translate([HDMI_HOLES_LENGTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI,HDMI_HOLES_WIDTH/2,base_height+FRONT_COVER_TRAPS_TOLERANCE+50*explode]) hex_hole(h_trap=local_nut_height,h_hole=local_hole_height,r_trap=screw_standard,rot=180);
+            translate([HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI,base_height+FRONT_COVER_TRAPS_TOLERANCE+50*explode]) hex_hole(h_trap=local_nut_height,h_hole=local_hole_height,r_trap=screw_standard,rot=180);
         
             translate([HDMI_HOLES_LENGTH/2,-HDMI_HOLES_WIDTH/2,base_height+FRONT_COVER_TRAPS_TOLERANCE+50*explode]) hex_hole(h_trap=local_nut_height,h_hole=local_hole_height,r_trap=screw_standard,rot=180);
             translate([HDMI_HOLES_LENGTH/2+screw_standard*2+gap_mainscrews,-HDMI_HOLES_WIDTH/2,base_height+FRONT_COVER_TRAPS_TOLERANCE+50*explode]) hex_hole(h_trap=local_nut_height,h_hole=local_hole_height,r_trap=screw_standard,rot=180);
