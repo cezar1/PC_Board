@@ -37,6 +37,9 @@ module back_plate()
                             cube(size = [BACK_PLATE_WALL,sqrt(local_length*local_length+local_width*local_width),BACK_PLATE_THICKNESS], center = true);
                             cube(size = [sqrt(local_length*local_length+local_width*local_width),BACK_PLATE_WALL,BACK_PLATE_THICKNESS], center = true); 
                             //Screw blocks 
+                            translate([HDMI_HOLES_LENGTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI,HDMI_HOLES_WIDTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI,0]){
+                                 cube([SCREW_BLOCK_SIZE,SCREW_BLOCK_SIZE,BACK_PLATE_THICKNESS],center=true);
+                             }    
                             translate([HDMI_HOLES_LENGTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI,HDMI_HOLES_WIDTH/2,0]){
                                  cube([SCREW_BLOCK_SIZE,SCREW_BLOCK_SIZE,BACK_PLATE_THICKNESS],center=true);
                              }
@@ -44,6 +47,9 @@ module back_plate()
                                  cube([SCREW_BLOCK_SIZE,SCREW_BLOCK_SIZE,BACK_PLATE_THICKNESS],center=true);
                              }
                              //2 : - +
+                             translate([-HDMI_HOLES_LENGTH/2-SCREW_STANDARD_M3*2-GAP_MAINSCREWS_HDMI,+HDMI_HOLES_WIDTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI,0]){
+                                 cube([SCREW_BLOCK_SIZE,SCREW_BLOCK_SIZE,BACK_PLATE_THICKNESS],center=true);
+                             }
                              translate([-HDMI_HOLES_LENGTH/2-SCREW_STANDARD_M3*2-GAP_MAINSCREWS_HDMI,HDMI_HOLES_WIDTH/2,0]){
                                  cube([SCREW_BLOCK_SIZE,SCREW_BLOCK_SIZE,BACK_PLATE_THICKNESS],center=true);
                              }
@@ -51,6 +57,9 @@ module back_plate()
                                  cube([SCREW_BLOCK_SIZE,SCREW_BLOCK_SIZE,BACK_PLATE_THICKNESS],center=true);
                              }
                              //3 : + -
+                             translate([HDMI_HOLES_LENGTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI,-HDMI_HOLES_WIDTH/2-SCREW_STANDARD_M3*2-GAP_MAINSCREWS_HDMI,0]){
+                                 cube([SCREW_BLOCK_SIZE,SCREW_BLOCK_SIZE,BACK_PLATE_THICKNESS],center=true);
+                             }
                              translate([HDMI_HOLES_LENGTH/2+SCREW_STANDARD_M3*2+GAP_MAINSCREWS_HDMI,-HDMI_HOLES_WIDTH/2,0]){
                                  cube([SCREW_BLOCK_SIZE,SCREW_BLOCK_SIZE,BACK_PLATE_THICKNESS],center=true);
                              }
@@ -58,6 +67,9 @@ module back_plate()
                                  cube([SCREW_BLOCK_SIZE,SCREW_BLOCK_SIZE,BACK_PLATE_THICKNESS],center=true);
                              }
                              //4 : - -
+                             translate([-HDMI_HOLES_LENGTH/2-SCREW_STANDARD_M3*2-GAP_MAINSCREWS_HDMI,-HDMI_HOLES_WIDTH/2-SCREW_STANDARD_M3*2-GAP_MAINSCREWS_HDMI,0]){
+                                 cube([SCREW_BLOCK_SIZE,SCREW_BLOCK_SIZE,BACK_PLATE_THICKNESS],center=true);
+                             }
                              translate([-HDMI_HOLES_LENGTH/2-SCREW_STANDARD_M3*2-GAP_MAINSCREWS_HDMI,-HDMI_HOLES_WIDTH/2,0]){
                                  cube([SCREW_BLOCK_SIZE,SCREW_BLOCK_SIZE,BACK_PLATE_THICKNESS],center=true);
                              }
