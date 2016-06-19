@@ -143,9 +143,6 @@ module hdmi_plate()
                 }
            
         }
-    
-    
-        
 }
 
 hdmi_plate();
