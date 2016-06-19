@@ -1,6 +1,4 @@
 include <configuration/general.scad>;
-include <utils/hex_trap.scad>;
-use <utils/adapter0.scad>;
 module zip_ties_side()
 {
     for (i=[-1,1]){

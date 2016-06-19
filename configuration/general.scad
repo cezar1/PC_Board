@@ -1,3 +1,5 @@
+include <../utils/hex_trap.scad>;
+use <../utils/adapter0.scad>;
 EXPLODE=0;
 exploded = $exploded == undef ? 0 : $exploded; // 1 for exploded view
 
@@ -74,6 +76,8 @@ PILLARS_TOP_OFFSET_Y=0;
 TOP_PANEL_DIST=50;
 TOP_PANEL_GAP=25;
 TOP_PANEL_EXTENSION_WITDH=30;
+TOP_PANEL_THICKNESS=5;
+
 
 //Adapter0
 CIRCUIT_BOARD_SCREWSTANDARD0=2;
