@@ -37,7 +37,7 @@ module hex_hole_exit(h_trap,h_hole,r_trap,rot,l_exit,rot_exit)
 module hex_hole_exit_tunnel(h_trap,h_hole,r_trap,rot,l_exit,rot_exit,l_tunnel)
 {
     rotate([rot,0,0]) {
-        translate([0,0,h_trap+h_hole])
+        translate([0,0,h_trap+h_hole-1])
         {
             cylinder(h = l_tunnel, r = make_r_hole_for_screw_standard(r_trap), $fn = 20);
         }
