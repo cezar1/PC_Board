@@ -1,4 +1,4 @@
-//$exploded=1;
+$exploded=0;
 include <../configuration/general.scad>;
 include <hex_trap.scad>;
 
@@ -41,15 +41,16 @@ module small_wall(across_width)
             translate([across_width+local_thickness,0,local_height/2])rotate([0,0,180])hex_hole_exit(h_trap=NUT_HEIGHT_M3,h_hole=NUT_HEIGHT_M3*2,r_trap=SCREW_STANDARD_M3,rot=180,l_exit=thickness*2,rot_exit=-180);
             translate([across_width+local_thickness,0,-local_height/2])rotate([0,0,180])hex_hole_exit(h_trap=NUT_HEIGHT_M3,h_hole=NUT_HEIGHT_M3*2,r_trap=SCREW_STANDARD_M3,rot=0,l_exit=thickness*2,rot_exit=-180);
             //center hole+trap
-            translate([across_width+local_thickness+local_thickness/2+1,0,0])rotate([90,0,0])rotate([0,90,0])hex_hole_exit_tunnel(h_trap=NUT_HEIGHT_M3,h_hole=NUT_HEIGHT_M3*2,r_trap=SCREW_STANDARD_M3,rot=180,l_exit=thickness*2,rot_exit=-180,l_tunnel=NUT_HEIGHT_M3*5);
+            for(i=[-1,1]){
+       color([1,0,0])translate([across_width+local_thickness+local_thickness/2+1,0,i*local_height/6])rotate([90,0,0])rotate([0,90,0])hex_hole_exit_tunnel(h_trap=NUT_HEIGHT_M3,h_hole=NUT_HEIGHT_M3*2,r_trap=SCREW_STANDARD_M3,rot=180,l_exit=thickness*2,rot_exit=-180,l_tunnel=NUT_HEIGHT_M3*4);}
             //ZIP TIES
             translate([across_width/2+local_thickness/2,0,local_height/2-PILLARS_THICKNESS2/2]) rotate([0,90,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH2,ZIPTIE_WIDTH],center=true);
             translate([across_width/2+local_thickness/2,0,-local_height/2+PILLARS_THICKNESS2/2]) rotate([0,90,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH2,ZIPTIE_WIDTH],center=true);
             translate([across_width/2+local_thickness/2,0,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH2,ZIPTIE_WIDTH],center=true);
-            translate([across_width+local_thickness,0,local_height/4]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE_WIDTH],center=true);
-            translate([across_width+local_thickness,0,-local_height/4]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE_WIDTH],center=true);
-            translate([across_width+PILLARS_THICKNESS2/2,0,local_height/4]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE_WIDTH],center=true);
-            translate([across_width+PILLARS_THICKNESS2/2,0,-local_height/4]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE_WIDTH],center=true);
+            translate([across_width+local_thickness,0,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE_WIDTH],center=true);
+            
+            translate([across_width+PILLARS_THICKNESS2/2,0,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE_WIDTH],center=true);
+            
             translate([0,0,local_height/6]) rotate([0,0,90]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH3,ZIPTIE_WIDTH],center=true);
             translate([0,0,-local_height/6]) rotate([0,0,90]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH3,ZIPTIE_WIDTH],center=true);
         }
@@ -60,7 +61,8 @@ module small_wall(across_width)
         translate([0,0,30+local_height/2])hex_hole_exit(h_trap=NUT_HEIGHT_M3,h_hole=30+NUT_HEIGHT_M3*2,r_trap=SCREW_STANDARD_M3,rot=180,l_exit=thickness*2,rot_exit=-180);        
        translate([across_width+local_thickness,0,30+local_height/2])rotate([0,0,180])hex_hole_exit(h_trap=NUT_HEIGHT_M3,h_hole=30+NUT_HEIGHT_M3*2,r_trap=SCREW_STANDARD_M3,rot=180,l_exit=thickness*2,rot_exit=-180);
        translate([across_width+local_thickness,0,-30-local_height/2])rotate([0,0,180])hex_hole_exit(h_trap=NUT_HEIGHT_M3,h_hole=30+NUT_HEIGHT_M3*2,r_trap=SCREW_STANDARD_M3,rot=0,l_exit=thickness*2,rot_exit=-180);
-       color([1,0,0])translate([across_width+local_thickness+local_thickness/2+1,0,0])rotate([90,0,0])rotate([0,90,0])hex_hole_exit_tunnel(h_trap=NUT_HEIGHT_M3,h_hole=NUT_HEIGHT_M3*2,r_trap=SCREW_STANDARD_M3,rot=180,l_exit=thickness*2,rot_exit=-180,l_tunnel=NUT_HEIGHT_M3*5);
+       for(i=[-1,1]){
+       color([1,0,0])translate([across_width+local_thickness+local_thickness/2+1,0,i*local_height/6])rotate([90,0,0])rotate([0,90,0])hex_hole_exit_tunnel(h_trap=NUT_HEIGHT_M3,h_hole=NUT_HEIGHT_M3*2,r_trap=SCREW_STANDARD_M3,rot=180,l_exit=thickness*2,rot_exit=-180,l_tunnel=NUT_HEIGHT_M3*4);}
    }
 }
 module pillar(thickness,thickness2,height,offset_bottom_x,offset_bottom_y,offset_top_x,offset_top_y,across_width,across_width_side)
