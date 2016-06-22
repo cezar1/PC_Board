@@ -1,6 +1,7 @@
 $exploded=0;
 include <../configuration/general.scad>;
 include <hex_trap.scad>;
+use <../battery.scad>;
 
 module small_wall(across_width)
 {
@@ -109,6 +110,9 @@ local_width=HDMI_HOLES_WIDTH;
 }
 module base_pillars()
 {
+    //Battery
+    battery_assembly();
+    //Pillars
     translate([0,0,HDMI_COVER_HEIGHT]){
         local_length=HDMI_HOLES_LENGTH+GAP_MAINSCREWS_HDMI*2+SCREW_STANDARD_M3*4;
         local_width=HDMI_HOLES_WIDTH;
