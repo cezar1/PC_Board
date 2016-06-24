@@ -13,11 +13,16 @@ module small_wall(across_width,extra_top,extra_top_margin,local_angle,config)
         union()
         {
             
-            if (config==PILLARS_SMALL_WALL_CONFIG_BATTERY){
-                
-                hull(){
-                translate([(across_width)/2+local_thickness/2,0,-local_height/2+local_thickness/2-extra_top/2]) cube ([across_width,local_thickness,local_thickness+extra_top],center=true);
-                translate([(across_width)/2+local_thickness/2,BATT_EXTRA_USB_LENGTH,-local_height/2-extra_top/2]) cube ([across_width,local_thickness,extra_top],center=true);
+            if (config==PILLARS_SMALL_WALL_CONFIG_BATTERY || config==PILLARS_SMALL_WALL_CONFIG_BATTERY_BOTTOM){
+                if (config==PILLARS_SMALL_WALL_CONFIG_BATTERY){
+                    hull(){
+                    translate([(across_width)/2+local_thickness/2,0,-local_height/2+local_thickness/2-extra_top/2]) cube ([across_width,local_thickness,local_thickness+extra_top],center=true);
+                    
+                        translate([(across_width)/2+local_thickness/2,BATT_EXTRA_USB_LENGTH,-local_height/2-extra_top/2]) cube ([across_width,local_thickness,extra_top],center=true);
+                    }
+                }
+                else{
+                    translate([(across_width)/2+local_thickness/2,0,-local_height/2+local_thickness/2-extra_top/2]) cube ([across_width,local_thickness,local_thickness+extra_top],center=true);
                 }
                 }
             intersection()
@@ -41,8 +46,14 @@ module small_wall(across_width,extra_top,extra_top_margin,local_angle,config)
                         }
                     
                     //if (config==PILLARS_SMALL_WALL_CONFIG_DEFAULT) {translate([across_width+local_thickness/2-thickness2/2,0,0]) cube([thickness2,thickness2,local_height],center=true);}
+                        if (config==PILLARS_SMALL_WALL_CONFIG_DEFAULT || config==PILLARS_SMALL_WALL_CONFIG_BATTERY) {
                     translate([across_width/2+local_thickness/2,0,0]) rotate([0,local_angle,0]) cube([thickness2,thickness2,local_diagonal],center=true);
-                    translate([across_width/2+local_thickness/2,0,0]) rotate([0,-local_angle,0]) cube([thickness2,thickness2,local_diagonal],center=true);
+                    translate([across_width/2+local_thickness/2,0,0]) rotate([0,-local_angle,0]) cube([thickness2,thickness2,local_diagonal],center=true);}
+                    else 
+                    {
+                        translate([across_width/2+local_thickness/2-1,0,0]) rotate([0,local_angle,0]) cube([thickness2,thickness2,local_diagonal],center=true);
+                        translate([across_width/2+local_thickness/2,0,0]) rotate([0,-local_angle,0]) cube([thickness2,thickness2,local_diagonal],center=true);
+                    }
                 }
             }
         }
@@ -64,13 +75,13 @@ module small_wall(across_width,extra_top,extra_top_margin,local_angle,config)
             //if (config==PILLARS_SMALL_WALL_CONFIG_DEFAULT) {
                 translate([across_width/2+local_thickness/2,0,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH2,ZIPTIE_WIDTH],center=true);
                 //}
-            if (config==PILLARS_SMALL_WALL_CONFIG_BATTERY) {
+            if (config==PILLARS_SMALL_WALL_CONFIG_BATTERY || config==PILLARS_SMALL_WALL_CONFIG_BATTERY_BOTTOM) {
                 //translate([across_width/2+local_thickness/2,0,0]) rotate([0,0,90]) rotate([0,90,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE2_WIDTH],center=true);
                 temp=-0;
-                translate([across_width/2+local_thickness/2+across_width/2-extra_top_margin-ZIPTIE_HEIGHT*1.5,temp,-local_height/2+PILLARS_THICKNESS2/2-ZIPTIE_LENGTH1/2-5]) rotate([90,0,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE2_WIDTH],center=true);
+                translate([across_width/2+local_thickness/2+across_width/2-extra_top_margin-ZIPTIE_HEIGHT*2,temp,-local_height/2+PILLARS_THICKNESS2/2-ZIPTIE_LENGTH1/2-5]) rotate([90,0,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE2_WIDTH],center=true);
                 translate([across_width/2+local_thickness/2-across_width/2+extra_top_margin+ZIPTIE_HEIGHT*1.5,temp,-local_height/2+PILLARS_THICKNESS2/2-ZIPTIE_LENGTH1/2-5]) rotate([90,0,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE2_WIDTH],center=true);
-                translate([across_width/2+local_thickness/2+across_width/2-extra_top_margin-ZIPTIE_HEIGHT*2-6.0,temp,-local_height/2+PILLARS_THICKNESS2/2+1.5]) rotate([90,-45,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH4,ZIPTIE2_WIDTH],center=true);
-                translate([across_width/2+local_thickness/2-16.3,temp,-local_height/2+PILLARS_THICKNESS2/2+1.6]) rotate([90,45,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH4,ZIPTIE2_WIDTH],center=true);
+                translate([across_width/2+local_thickness/2+across_width/2-extra_top_margin-ZIPTIE_HEIGHT*2-7.0,temp,-local_height/2+PILLARS_THICKNESS2/2+1.5]) rotate([90,-45,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH4,ZIPTIE2_WIDTH],center=true);
+                translate([across_width/2+local_thickness/2-17.8,temp,-local_height/2+PILLARS_THICKNESS2/2+1.6]) rotate([90,45,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH4,ZIPTIE2_WIDTH],center=true);
                 }
             translate([across_width+local_thickness,0,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE_WIDTH],center=true);
             
@@ -137,7 +148,7 @@ local_width=HDMI_HOLES_WIDTH;
 module battery_pillar_bottom()
 {
     translate([-HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2,0]) rotate([0,0,90])
-            pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=SIDE_PANEL_EXTENSION_WIDTH_BATTERY,across_width_side=SIDE_PANEL_EXTENSION_WIDTH,extra_top=SIDE_PANEL_BATT_EXTRA_TOP,extra_top_side=0,config=PILLARS_SMALL_WALL_CONFIG_BATTERY,config_side=PILLARS_SMALL_WALL_CONFIG_DEFAULT);
+            pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,thickness2_side=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=SIDE_PANEL_EXTENSION_WIDTH_BATTERY,across_width_side=SIDE_PANEL_EXTENSION_WIDTH,extra_top=SIDE_PANEL_BATT_EXTRA_TOP,extra_top_side=0,config=PILLARS_SMALL_WALL_CONFIG_BATTERY_BOTTOM,config_side=PILLARS_SMALL_WALL_CONFIG_DEFAULT);
 }
 module battery_pillar_usb()
 {
@@ -198,4 +209,5 @@ module base_pillars()
 }
 //single_pillar();
 //base_pillars();
-battery_pillar_usb_assembly();
+battery_pillar_bottom_assembly();
+//battery_pillar_usb_assembly();
