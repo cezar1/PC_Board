@@ -12,7 +12,7 @@ module small_wall(across_width,extra_top,extra_top_margin,local_angle,config)
         //Build body small wall
         union()
         {
-            
+            //Battery part, creating a hull which supports the battery
             if (config==PILLARS_SMALL_WALL_CONFIG_BATTERY || config==PILLARS_SMALL_WALL_CONFIG_BATTERY_BOTTOM){
                 if (config==PILLARS_SMALL_WALL_CONFIG_BATTERY){
                     hull(){
@@ -25,6 +25,7 @@ module small_wall(across_width,extra_top,extra_top_margin,local_angle,config)
                     translate([(across_width)/2+local_thickness/2,0,-local_height/2+local_thickness/2-extra_top/2]) cube ([across_width,local_thickness,local_thickness+extra_top],center=true);
                 }
                 }
+            //Main cube    
             intersection()
             {         
                 union()
@@ -45,8 +46,8 @@ module small_wall(across_width,extra_top,extra_top_margin,local_angle,config)
                         translate([(across_width)/2+local_thickness/2,0,-local_height/2+local_thickness/2]) cube ([across_width,local_thickness,local_thickness],center=true);
                         }
                     
-                    //if (config==PILLARS_SMALL_WALL_CONFIG_DEFAULT) {translate([across_width+local_thickness/2-thickness2/2,0,0]) cube([thickness2,thickness2,local_height],center=true);}
-                        if (config==PILLARS_SMALL_WALL_CONFIG_DEFAULT || config==PILLARS_SMALL_WALL_CONFIG_BATTERY) {
+                    //CROSS FOR SUPPORT
+                        if (config==PILLARS_SMALL_WALL_CONFIG_DEFAULT) {
                     translate([across_width/2+local_thickness/2,0,0]) rotate([0,local_angle,0]) cube([thickness2,thickness2,local_diagonal],center=true);
                     translate([across_width/2+local_thickness/2,0,0]) rotate([0,-local_angle,0]) cube([thickness2,thickness2,local_diagonal],center=true);}
                     else 
@@ -209,5 +210,5 @@ module base_pillars()
 }
 //single_pillar();
 //base_pillars();
-battery_pillar_bottom_assembly();
-//battery_pillar_usb_assembly();
+//battery_pillar_bottom_assembly();
+battery_pillar_usb_assembly();
