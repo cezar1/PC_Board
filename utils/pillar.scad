@@ -13,7 +13,7 @@ module small_wall(across_width,extra_top,extra_top_margin,local_angle,config)
         union()
         {
             
-            translate([(across_width)/2+local_thickness/2,0,-local_height/2+thickness2/2-extra_top/2]) cube ([across_width-extra_top_margin*2,thickness2,thickness2+extra_top],center=true);
+            if (config==PILLARS_SMALL_WALL_CONFIG_BATTERY){translate([(across_width)/2+local_thickness/2,0,-local_height/2+local_thickness/2-extra_top/2]) cube ([across_width-extra_top_margin*2,local_thickness,thickness2+extra_top],center=true);}
             intersection()
             {         
                 union()
@@ -27,7 +27,11 @@ module small_wall(across_width,extra_top,extra_top_margin,local_angle,config)
                     cube([local_thickness,local_thickness,local_height],center=true);
                     translate([(across_width)+local_thickness,0,0]) cube([local_thickness,local_thickness,local_height],center=true);
                     translate([(across_width)/2+local_thickness/2,0,local_height/2-thickness2/2]) cube ([across_width,thickness2,thickness2],center=true);
-                    translate([(across_width)/2+local_thickness/2,0,-local_height/2+thickness2/2]) cube ([across_width,thickness2,thickness2],center=true);
+                    if (config==PILLARS_SMALL_WALL_CONFIG_DEFAULT) {
+                        translate([(across_width)/2+local_thickness/2,0,-local_height/2+thickness2/2]) cube ([across_width,thickness2,thickness2],center=true);}
+                    if (config==PILLARS_SMALL_WALL_CONFIG_DEFAULT){
+                        translate([(across_width)/2+local_thickness/2,0,-local_height/2+local_thickness/2]) cube ([across_width,local_thickness,local_thickness],center=true);}
+                    
                     //if (config==PILLARS_SMALL_WALL_CONFIG_DEFAULT) {translate([across_width+local_thickness/2-thickness2/2,0,0]) cube([thickness2,thickness2,local_height],center=true);}
                     translate([across_width/2+local_thickness/2,0,0]) rotate([0,local_angle,0]) cube([thickness2,thickness2,local_diagonal],center=true);
                     translate([across_width/2+local_thickness/2,0,0]) rotate([0,-local_angle,0]) cube([thickness2,thickness2,local_diagonal],center=true);
@@ -51,9 +55,12 @@ module small_wall(across_width,extra_top,extra_top_margin,local_angle,config)
             translate([across_width/2+local_thickness/2,0,-local_height/2+PILLARS_THICKNESS2/2]) rotate([0,90,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH2,ZIPTIE_WIDTH],center=true);
             if (config==PILLARS_SMALL_WALL_CONFIG_DEFAULT) {translate([across_width/2+local_thickness/2,0,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH2,ZIPTIE_WIDTH],center=true);}
             if (config==PILLARS_SMALL_WALL_CONFIG_BATTERY) {
-                translate([across_width/2+local_thickness/2,0,0]) rotate([0,0,90]) rotate([0,90,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE2_WIDTH],center=true);
-                translate([across_width/2+local_thickness/2+across_width/2-extra_top_margin-ZIPTIE_HEIGHT*2,0,-local_height/2+PILLARS_THICKNESS2/2]) rotate([90,0,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE2_WIDTH],center=true);
-                translate([across_width/2+local_thickness/2-across_width/2+extra_top_margin+ZIPTIE_HEIGHT*2,0,-local_height/2+PILLARS_THICKNESS2/2]) rotate([90,0,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE2_WIDTH],center=true);}
+                //translate([across_width/2+local_thickness/2,0,0]) rotate([0,0,90]) rotate([0,90,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE2_WIDTH],center=true);
+                temp=-5;
+                translate([across_width/2+local_thickness/2+across_width/2-extra_top_margin-ZIPTIE_HEIGHT*2,temp,-local_height/2+PILLARS_THICKNESS2/2-ZIPTIE_LENGTH2]) rotate([90,0,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH2,ZIPTIE2_WIDTH],center=true);
+                translate([across_width/2+local_thickness/2+across_width/2-extra_top_margin-ZIPTIE_HEIGHT*2-6.8,temp,-local_height/2+PILLARS_THICKNESS2/2+1.5]) rotate([90,-45,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH4,ZIPTIE2_WIDTH],center=true);
+                translate([across_width/2+local_thickness/2-6.8,temp,-local_height/2+PILLARS_THICKNESS2/2+1.5]) rotate([90,45,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH4,ZIPTIE2_WIDTH],center=true);
+                translate([across_width/2+local_thickness/2-across_width/2+extra_top_margin+ZIPTIE_HEIGHT*2,temp,-local_height/2+PILLARS_THICKNESS2/2-ZIPTIE_LENGTH2]) rotate([90,0,0])cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH2,ZIPTIE2_WIDTH],center=true);}
             translate([across_width+local_thickness,0,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE_WIDTH],center=true);
             
             translate([across_width+PILLARS_THICKNESS2/2,0,0]) cube([ZIPTIE_HEIGHT,ZIPTIE_LENGTH1,ZIPTIE_WIDTH],center=true);
@@ -85,10 +92,10 @@ module pillar(thickness,thickness2,thickness2_side,height,offset_bottom_x,offset
         union()
         {
             translate([GAP_MAINSCREWS_HDMI+SCREW_STANDARD_M3*2,0,0]){
-            small_wall(local_thickness=local_thickness,local_height=local_height,across_width=across_width_side,thickness2=thickness2_side,local_angle=local_angle_side,local_diagonal=local_diagonal_side,thickness=thickness,extra_top=extra_top_side,extra_top_margin=3*ZIPTIE_HEIGHT,config=config_side);
+            small_wall(local_thickness=local_thickness,local_height=local_height,across_width=across_width_side,thickness2=thickness2_side,local_angle=local_angle_side,local_diagonal=local_diagonal_side,thickness=thickness,extra_top=extra_top_side,extra_top_margin=-ZIPTIE_HEIGHT,config=config_side);
             }
             translate([0,GAP_MAINSCREWS_HDMI+SCREW_STANDARD_M3*2,0]) rotate([0,0,90]) {
-                small_wall(local_thickness=local_thickness,local_height=local_height,across_width=across_width,thickness2=thickness2,local_angle=local_angle,local_diagonal=local_diagonal,thickness=thickness,extra_top=extra_top,extra_top_margin=3*ZIPTIE_HEIGHT,config=config);   
+                small_wall(local_thickness=local_thickness,local_height=local_height,across_width=across_width,thickness2=thickness2,local_angle=local_angle,local_diagonal=local_diagonal,thickness=thickness,extra_top=extra_top,extra_top_margin=2*ZIPTIE_HEIGHT,config=config);   
             
             }
             translate([GAP_MAINSCREWS_HDMI+SCREW_STANDARD_M3*2,GAP_MAINSCREWS_HDMI+SCREW_STANDARD_M3*2,0])  {
@@ -114,7 +121,7 @@ module single_pillar()
 {
     local_length=HDMI_HOLES_LENGTH+GAP_MAINSCREWS_HDMI*2+SCREW_STANDARD_M3*4;
 local_width=HDMI_HOLES_WIDTH;
-    pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=PILLARS_BOTTOM_OFFSET_X,offset_bottom_y=PILLARS_BOTTOM_OFFSET_Y,offset_top_x=PILLARS_TOP_OFFSET_X,offset_top_y=PILLARS_TOP_OFFSET_Y,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH,extra_top=SIDE_PANEL_BATT_EXTRA_TOP,extra_top_side=0,config=PILLARS_SMALL_WALL_CONFIG_BATTERY,config_side=PILLARS_SMALL_WALL_CONFIG_DEFAULT);
+    pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,thickness2_side=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=PILLARS_BOTTOM_OFFSET_X,offset_bottom_y=PILLARS_BOTTOM_OFFSET_Y,offset_top_x=PILLARS_TOP_OFFSET_X,offset_top_y=PILLARS_TOP_OFFSET_Y,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH,extra_top=SIDE_PANEL_BATT_EXTRA_TOP,extra_top_side=SIDE_PANEL_BATT_EXTRA_TOP,config=PILLARS_SMALL_WALL_CONFIG_BATTERY,config_side=PILLARS_SMALL_WALL_CONFIG_BATTERY);
 }
 module battery_pillar_bottom()
 {
@@ -124,7 +131,7 @@ module battery_pillar_bottom()
 module battery_pillar_usb()
 {
     translate([-HDMI_HOLES_LENGTH/2,-HDMI_HOLES_WIDTH/2,0]) rotate([0,0,-180])
-            pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,thickness2_side=PILLARS_THICKNESS,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH_BATTERY,extra_top=0,extra_top_side=SIDE_PANEL_BATT_EXTRA_TOP,config=PILLARS_SMALL_WALL_CONFIG_DEFAULT,config_side=PILLARS_SMALL_WALL_CONFIG_BATTERY);
+            pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,thickness2_side=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH_BATTERY,extra_top=0,extra_top_side=SIDE_PANEL_BATT_EXTRA_TOP,config=PILLARS_SMALL_WALL_CONFIG_DEFAULT,config_side=PILLARS_SMALL_WALL_CONFIG_BATTERY);
 }
 module battery_pillar_usb_assembly()
 {
