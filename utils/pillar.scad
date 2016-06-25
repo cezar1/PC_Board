@@ -179,6 +179,16 @@ module battery_pillars()
                     
                 
 }
+module pillar_right_top()
+{
+    translate([HDMI_HOLES_LENGTH/2,-HDMI_HOLES_WIDTH/2,0]) rotate([0,0,-90])
+        pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,thickness2_side=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=SIDE_PANEL_EXTENSION_WIDTH,across_width_side=TOP_PANEL_EXTENSION_WITDH,extra_top=0,extra_top_side=0,config=PILLARS_SMALL_WALL_CONFIG_DEFAULT,config_side=PILLARS_SMALL_WALL_CONFIG_DEFAULT);
+}
+module pillar_right_bottom()
+{
+    translate([HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2,0]) /*rotate([0,0,90])*/
+        pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,thickness2_side=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=PILLARS_BOTTOM_OFFSET_X,offset_bottom_y=PILLARS_BOTTOM_OFFSET_Y,offset_top_x=PILLARS_TOP_OFFSET_X,offset_top_y=PILLARS_TOP_OFFSET_Y,across_width=BOTTOM_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH,extra_top=0,extra_top_side=0,config=PILLARS_SMALL_WALL_CONFIG_DEFAULT,config_side=PILLARS_SMALL_WALL_CONFIG_DEFAULT);
+}
 module base_pillars()
 {
     
@@ -190,24 +200,17 @@ module base_pillars()
         local_width=HDMI_HOLES_WIDTH;
             
         translate([0,0,PILLARS_HEIGHT/2]){
-        translate([HDMI_HOLES_LENGTH/2,HDMI_HOLES_WIDTH/2,0]) /*rotate([0,0,90])*/
-        pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=PILLARS_BOTTOM_OFFSET_X,offset_bottom_y=PILLARS_BOTTOM_OFFSET_Y,offset_top_x=PILLARS_TOP_OFFSET_X,offset_top_y=PILLARS_TOP_OFFSET_Y,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH,extra_top=0,extra_top_side=0,config=PILLARS_SMALL_WALL_CONFIG_DEFAULT,config_side=PILLARS_SMALL_WALL_CONFIG_DEFAULT);
+            pillar_right_bottom();
             //Battery pillars
             battery_pillar_usb_assembly();
             battery_pillar_bottom_assembly();
-            /*
-            difference()
-            {
-                battery_pillars();
-                translate([0,0,-PILLARS_HEIGHT/2]) battery_assembly(clearance=10);
-            }*/
-        translate([HDMI_HOLES_LENGTH/2,-HDMI_HOLES_WIDTH/2,0]) rotate([0,0,-90])
-        pillar(thickness=PILLARS_THICKNESS,thickness2=PILLARS_THICKNESS2,height=PILLARS_HEIGHT,offset_bottom_x=0,offset_bottom_y=0,offset_top_x=0,offset_top_y=0,across_width=TOP_PANEL_EXTENSION_WITDH,across_width_side=SIDE_PANEL_EXTENSION_WIDTH,extra_top=0,extra_top_side=0,config=PILLARS_SMALL_WALL_CONFIG_DEFAULT,config_side=PILLARS_SMALL_WALL_CONFIG_DEFAULT);
+            pillar_right_top();
             
         
         }
     }
 }
+//pillar_right_top();
 //single_pillar();
 //base_pillars();
 //battery_pillar_bottom_assembly();
