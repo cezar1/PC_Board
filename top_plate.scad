@@ -1,6 +1,10 @@
 $exploded=1;
 include <configuration/general.scad>;
-
+module top_plate_main_fixing_blocks()
+{
+    for (i=[-1,1]){
+        translate([i*HDMI_HOLES_LENGTH/2,local_width/2-PILLARS_THICKNESS/2,]) color([0,0,1]) cube([SCREW_STANDARD_M3*3,SCREW_STANDARD_M3*3,local_height],center=true);}
+}
 module top_plate_main_fixing_holes(is_explode)
 {
     for (i=[-1,1]){
@@ -20,6 +24,7 @@ module top_plate()
         if (exploded==1){
             color([0,1,0]) top_plate_main_fixing_holes(is_explode=1);            
         }
+        top_plate_main_fixing_blocks();
         //translate([local_length_right/2,0,0]) cube([TOP_PANEL_THICKNESS*2,local_width,local_height],center=true);
         difference(){
             union(){
@@ -60,9 +65,9 @@ local_length_right=HDMI_HOLES_LENGTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+
 local_width=TOP_PANEL_EXTENSION_WITDH+PILLARS_THICKNESS;
 local_height=HDMI_COVER_HEIGHT;
 top_plate();
-PCB_PUSHBUTTON_LENGTH=70;
-PCB_PUSHBUTTON_WIDTH=30;
-PCB_PUSHBUTTON_THICKNESS=1.6;
+
 translate([local_length_right-PCB_PUSHBUTTON_LENGTH/2-TOP_PANEL_THICKNESS,PCB_PUSHBUTTON_WIDTH/2-local_width/2+TOP_PANEL_THICKNESS,PCB_PUSHBUTTON_THICKNESS/2]) color([0,1,0]) cube([PCB_PUSHBUTTON_LENGTH,PCB_PUSHBUTTON_WIDTH,PCB_PUSHBUTTON_THICKNESS],center=true);
+
+translate([-local_length_left/2,PCB_CAMERA_WIDTH/2-local_width/2+TOP_PANEL_THICKNESS,PCB_CAMERA_THICKNESS/2]) color([0,1,0]) cube([PCB_CAMERA_LENGTH,PCB_CAMERA_WIDTH,PCB_CAMERA_THICKNESS],center=true);
 //top_plate_left();
 //top_plate_right();

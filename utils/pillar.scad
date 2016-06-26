@@ -210,8 +210,8 @@ module base_pillars()
         }
     }
 }
-//pillar_right_top();
+pillar_right_top();
 //single_pillar();
 //base_pillars();
 //battery_pillar_bottom_assembly();
-battery_pillar_usb_assembly();
+//battery_pillar_usb_assembly();
