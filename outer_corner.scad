@@ -23,7 +23,7 @@ module outer_corner_panel_wall(l_x,l_y,l_z,config,top,interface_side)
         union(){
             outer_corner_panel_wall_holes(is_explode=0,l_x=l_x,l_y=l_y,l_z=l_z,interface_side=interface_side);
             
-            translate([0,interface_side*l_y/4,0]) cube([l_x/1.7,l_y/2,l_z/1.5],center=true);    
+            translate([0,interface_side*l_y/4,0]) cube([l_x/2,l_y/2,l_z/1.5],center=true);    
         }
     }
     if ($exploded){
@@ -32,8 +32,8 @@ module outer_corner_panel_wall(l_x,l_y,l_z,config,top,interface_side)
     if (config==OUTER_CORNER_CONFIG_BATT_BOTTOM)
     {
         hull(){
-        translate([-(PILLARS_THICKNESS-OUTER_SHELL_THICKNESS)/2,PILLARS_THICKNESS/2+BATT_SHIFT_FRONT/2+OUTER_BATTERY_BUILD_INTO/2,l_z/2+top/2]) cube ([OUTER_BATTERY_SUPPORT_WIDTH,PILLARS_THICKNESS+BATT_SHIFT_FRONT+OUTER_SHELL_THICKNESS+OUTER_BATTERY_BUILD_INTO,top],center=true);
-        translate([0,0,l_z/2+top/2-5]) cube ([OUTER_BATTERY_SUPPORT_WIDTH/2,OUTER_SHELL_THICKNESS,top],center=true);
+        translate([-(PILLARS_THICKNESS-OUTER_SHELL_THICKNESS)/2,PILLARS_THICKNESS/2+BATT_SHIFT_FRONT/2+OUTER_BATTERY_BUILD_INTO/2,l_z/2+top/2]) cube ([OUTER_BATTERY_SUPPORT_WIDTH,PILLARS_THICKNESS+BATT_SHIFT_FRONT+OUTER_SHELL_THICKNESS+OUTER_BATTERY_BUILD_INTO,top+5],center=true);
+        translate([-(PILLARS_THICKNESS-OUTER_SHELL_THICKNESS)/2,0,l_z/2+top/2-5]) cube ([OUTER_BATTERY_SUPPORT_WIDTH,OUTER_SHELL_THICKNESS,top],center=true);
         }
     }
     
@@ -41,12 +41,30 @@ module outer_corner_panel_wall(l_x,l_y,l_z,config,top,interface_side)
 }
 module corner(rotate1,rotate2,length1,length2,top1,top2,height,config1,config2)
 {
+    difference(){
+        union(){
     //translate([-10/2,-10/2,0]) #cube([10,10,PILLARS_HEIGHT*3],center=true);    
     OUTER_INTERFACE_SIDE_1=1;
     OUTER_INTERFACE_SIDE_2=-1;
     translate([length1/2,OUTER_SHELL_THICKNESS/2,0]) outer_corner_panel_wall(l_x=length1,l_y=OUTER_SHELL_THICKNESS,l_z=height,config=config1,top=top1,interface_side=OUTER_INTERFACE_SIDE_1);
     translate([OUTER_SHELL_THICKNESS/2,length2/2,0]) rotate([0,0,90]) outer_corner_panel_wall(l_x=length2,l_y=OUTER_SHELL_THICKNESS,l_z=height,config=config2,top=top2,interface_side=OUTER_INTERFACE_SIDE_2);
-    
+    //Core pillar
+    translate([PILLARS_THICKNESS/2,PILLARS_THICKNESS/2,0]) cube([PILLARS_THICKNESS,PILLARS_THICKNESS,height],center=true);
+            //Strength pillar
+    intersection()
+            {
+         translate([PILLARS_THICKNESS/2,PILLARS_THICKNESS/2,0]) rotate([0,0,45]) #cube([PILLARS_THICKNESS*1.4,PILLARS_THICKNESS*1.4,height],center=true);  
+         translate([PILLARS_THICKNESS,PILLARS_THICKNESS,0]) rotate([0,0,0]) #cube([PILLARS_THICKNESS*2,PILLARS_THICKNESS*2,height],center=true); 
+            } 
+        }
+        union(){
+    translate([PILLARS_THICKNESS/2,PILLARS_THICKNESS/2,-height/2-0.1]) color([1,0,0]) hex_hole_exit(h_trap=NUT_HEIGHT_M3,h_hole=NUT_HEIGHT_M3*2,r_trap=SCREW_STANDARD_M3,rot=0,l_exit=PILLARS_THICKNESS*2,rot_exit=-180);
+    translate([PILLARS_THICKNESS/2,PILLARS_THICKNESS/2,height/2+0.1]) rotate([180,0,0]) color([1,0,0]) hex_hole_exit(h_trap=NUT_HEIGHT_M3,h_hole=NUT_HEIGHT_M3*2,r_trap=SCREW_STANDARD_M3,rot=0,l_exit=PILLARS_THICKNESS*2,rot_exit=-180);
+    translate([PILLARS_THICKNESS/2,PILLARS_THICKNESS/2,-height])      hex_hole(h_trap=0,h_hole=height*2,r_trap=SCREW_STANDARD_M3,rot=0);
+        }
+    }
+    if ($exploded==1)
+    color([1,0,0]) translate([PILLARS_THICKNESS/2,PILLARS_THICKNESS/2,-height])      hex_hole(h_trap=0,h_hole=height*2,r_trap=SCREW_STANDARD_M3,rot=0);
 }
 
 module corner_batt_bottom()
