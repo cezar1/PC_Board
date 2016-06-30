@@ -1,5 +1,17 @@
 $exploded=0;
 include <configuration/general.scad>;
+module outer_corner_plate(length,width,thickness,config)
+{
+    cube([length,thickness,width],center=true); 
+    for (j=[-1,1]){
+    for (i=[-1,1]){
+    translate([j*(length/2+PILLARS_THICKNESS/2),-OUTER_SHELL_THICKNESS/4,i*PILLARS_HEIGHT/PILLARS_TRAPS_HEIGHT_RATIO]) cube([PILLARS_THICKNESS,OUTER_SHELL_THICKNESS/2,OUTER_CORNER_INTERFACE_WIDTH],center=true);
+    }
+}
+    if (config==OUTER_CORNER_CONFIG_PLATE_BOTTOM)
+    {;
+    }
+}
 module outer_corner_panel_wall_holes(is_explode,interface_side)
 {
     local_h_hole=l_z+0.2+is_explode*30;
@@ -8,6 +20,7 @@ module outer_corner_panel_wall_holes(is_explode,interface_side)
             color([0,1,0]) rotate([90,0,0]) hex_hole(h_trap=0,h_hole=local_h_hole,r_trap=SCREW_STANDARD_M3,rot=180);
             
         }
+        //Interface traps
         if (is_explode==0)
         {
             translate([l_x/2-PILLARS_THICKNESS/2,interface_side*OUTER_SHELL_THICKNESS/4,i*PILLARS_HEIGHT/PILLARS_TRAPS_HEIGHT_RATIO]) cube([PILLARS_THICKNESS,OUTER_SHELL_THICKNESS/2,OUTER_CORNER_INTERFACE_WIDTH],center=true);
@@ -89,10 +102,14 @@ module corners_assembly()
     corner_bottom_right_y=0+HDMI_HOLES_WIDTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)+PILLARS_THICKNESS+BOTTOM_PANEL_EXTENSION_WITDH+OUTER_SHELL_THICKNESS;
         translate([corner_bottom_right_x,corner_bottom_right_y,0]) rotate ([180,180,0]) corner_right_bottom();
         //translate([0,0,-PILLARS_HEIGHT/2]) battery_assembly(clearance=10);
-    }
+    extra=-5;
+    plate_bottom_left_x=0;
+    plate_bottom_left_y=extra+HDMI_HOLES_WIDTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)+PILLARS_THICKNESS+BOTTOM_PANEL_EXTENSION_WITDH+OUTER_SHELL_THICKNESS/2;    
+    translate([plate_bottom_left_x,plate_bottom_left_y,0]) outer_corner_plate(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_BOTTOM);
+        }
     
 }
 
 //corner_batt_bottom();
-corner_right_bottom();
-//corners_assembly();
+//corner_right_bottom();
+corners_assembly();
