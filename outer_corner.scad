@@ -71,6 +71,10 @@ module corner_batt_bottom()
 {
     corner(length1=-1+SIDE_PANEL_EXTENSION_WIDTH_BATTERY+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,length2=-1+BOTTOM_PANEL_EXTENSION_WITDH+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,top1=BATT_HEIGHT/3,top2=0,height=PILLARS_HEIGHT,config1=OUTER_CORNER_CONFIG_BATT_BOTTOM,config2=OUTER_CORNER_CONFIG_NONE);    
 }
+module corner_right_bottom()
+{
+    corner(length1=-1+SIDE_PANEL_EXTENSION_WIDTH+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,length2=-1+BOTTOM_PANEL_EXTENSION_WITDH+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,top1=0,top2=0,height=PILLARS_HEIGHT,config1=OUTER_CORNER_CONFIG_NONE,config2=OUTER_CORNER_CONFIG_NONE);    
+}
 module corners_assembly()
 {
     
@@ -81,10 +85,14 @@ module corners_assembly()
     translate([corner_bottom_left_x,corner_bottom_left_y,0]) rotate ([0,180,180]) corner_batt_bottom();
     translate([0,0,-PILLARS_HEIGHT/2]) battery_assembly(clearance=10);
         }
+    corner_bottom_right_x=HDMI_HOLES_LENGTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)+PILLARS_THICKNESS+SIDE_PANEL_EXTENSION_WIDTH+OUTER_SHELL_THICKNESS;
+    corner_bottom_right_y=0+HDMI_HOLES_WIDTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)+PILLARS_THICKNESS+BOTTOM_PANEL_EXTENSION_WITDH+OUTER_SHELL_THICKNESS;
+        translate([corner_bottom_right_x,corner_bottom_right_y,0]) rotate ([180,180,0]) corner_right_bottom();
         //translate([0,0,-PILLARS_HEIGHT/2]) battery_assembly(clearance=10);
     }
     
 }
 
 //corner_batt_bottom();
-corners_assembly();
+corner_right_bottom();
+//corners_assembly();
