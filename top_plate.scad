@@ -104,8 +104,18 @@ translate([local_length_right-PCB_PUSHBUTTON_LENGTH/2-TOP_PANEL_THICKNESS,PCB_PU
         
         }
 //PCB camera
-PCB_CAMERA_LENGTH_SHIFT=TOP_PANEL_DIST-PCB_CAMERA_LENGTH/2;
-translate([-TOP_PANEL_DIST,0,-HDMI_COVER_HEIGHT/2-PCB_CAMERA_THICKNESS/2]) color([0,1,0]) cube([PCB_CAMERA_LENGTH,PCB_CAMERA_WIDTH,PCB_CAMERA_THICKNESS],center=true);
+    difference(){
+        union(){
+            for(i=[-1,1]){
+                top_plate_pcb_leg(offset_X=-TOP_PANEL_DIST+i*PCB_CAMERA_HOLES_LENGTH/2);}
+        }
+        union(){
+            translate([-TOP_PANEL_DIST,PCB_PUSHBUTTON_WIDTH/2-local_width/2+TOP_PANEL_THICKNESS,-HDMI_COVER_HEIGHT/2+TOP_PLATE_PCB_PUSH_LIFT/2]) rotate([180,0,0]) top_plate_pcb_do_traps(is_explode=0,mode=PCB_MODE_SYMMETRIC_HOLES,holes_length_dist=PCB_CAMERA_HOLES_LENGTH,holes_width_dist=PCB_CAMERA_HOLES_WIDTH,holes_standard=SCREW_STANDARD_M2,thickness=TOP_PLATE_PCB_PUSH_LIFT);
+        }
+    }
+    
+        
+//translate([-TOP_PANEL_DIST,0,-HDMI_COVER_HEIGHT/2-PCB_CAMERA_THICKNESS/2]) color([0,1,0]) cube([PCB_CAMERA_LENGTH,PCB_CAMERA_WIDTH,PCB_CAMERA_THICKNESS],center=true);
 }
 module top_plate_center_join()
 {
