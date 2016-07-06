@@ -33,6 +33,14 @@ module top_plate_pcb_do_holes()
 			}
 		}
 	}
+    if (mode==PCB_MODE_SHIFTED_FROM_TOP_HOLES)
+	{
+		for (j=[-1,1]){
+			for (i=[-1,1]){
+				translate([i*holes_length_dist/2,j*holes_width_dist/2+PCB_CAMERA_WIDTH/2-holes_width_dist/2-SCREW_STANDARD_M2/2-PCB_CAMERA_HOLES_FROM_TOP,thickness/2+0.1+EXPLODE_LENGTH1/2*is_explode]) hex_hole(h_trap=0,h_hole=thickness+0.2+is_explode*EXPLODE_LENGTH1,r_trap=SCREW_STANDARD_M2,rot=180);
+			}
+		}
+	}
 }
 module top_plate_pcb_do_traps()
 {
@@ -48,14 +56,14 @@ module top_plate_pcb_do_traps()
 	{
 		for (j=[-1,1]){
 			for (i=[-1,1]){
-				translate([i*holes_length_dist/2,j*holes_width_dist/2+PCB_CAMERA_WIDTH/2,thickness/2+0.1+EXPLODE_LENGTH1/2*is_explode]) hex_hole(h_trap=thickness/2+0.2+is_explode*EXPLODE_LENGTH1,h_hole=thickness/2+0.2,r_trap=SCREW_STANDARD_M2,rot=180);
+				translate([i*holes_length_dist/2,j*holes_width_dist/2+PCB_CAMERA_WIDTH/2-holes_width_dist/2-SCREW_STANDARD_M2/2-PCB_CAMERA_HOLES_FROM_TOP,-HDMI_COVER_HEIGHT/2-0.1+EXPLODE_LENGTH1/2*is_explode]) rotate([180,0,0]) hex_hole(h_trap=thickness/2+0.1+is_explode*EXPLODE_LENGTH1,h_hole=thickness/2+0.1,r_trap=SCREW_STANDARD_M2,rot=180);
 			}
 		}
 	}
 }
 module top_plate_pcb_with_holes(mode,length,width,thickness,holes_length_dist,holes_width_dist,holes_standard)
 {
-	is_explode=1;
+	is_explode=0;
 	if (is_explode==1){
 		top_plate_pcb_do_holes(is_explode=is_explode,mode=mode,holes_length_dist=holes_length_dist,holes_width_dist=holes_width_dist,holes_standard=holes_standard,thickness=thickness);
 	}
@@ -63,7 +71,7 @@ module top_plate_pcb_with_holes(mode,length,width,thickness,holes_length_dist,ho
 	difference(){
 		union()
 		{
-			cube([length,width,thickness],center=true);
+			translate ([0,0,-0.2]) cube([length,width,thickness],center=true);
 		}
 		top_plate_pcb_do_holes(is_explode=is_explode,mode=mode,holes_length_dist=holes_length_dist,holes_width_dist=holes_width_dist,holes_standard=holes_standard,thickness=thickness);
 	}
@@ -78,16 +86,45 @@ module top_plate_pcb__leg_trap(offset_X)
 		translate([offset_X,i*local_width/3,-HDMI_COVER_HEIGHT/2+TOP_PLATE_PCB_PUSH_LIFT+0.1+EXPLODE_LENGTH1/2*is_explode]) hex_hole(h_trap=TOP_PLATE_PCB_PUSH_LIFT/2+0.2+is_explode*EXPLODE_LENGTH1,h_hole=TOP_PLATE_PCB_PUSH_LIFT/2,r_trap=SCREW_STANDARD_M2,rot=180);
 	}
 }
+
+module top_plate_pcb_camera_assembly()
+{
+    translate([-TOP_PANEL_DIST,0,-HDMI_COVER_HEIGHT/2-PCB_CAMERA_THICKNESS/2]) color([0,1,0])
+	top_plate_pcb_with_holes(mode=PCB_MODE_SHIFTED_FROM_TOP_HOLES,length=PCB_CAMERA_LENGTH,width=PCB_CAMERA_WIDTH,thickness=PCB_CAMERA_THICKNESS,holes_length_dist=PCB_CAMERA_HOLES_LENGTH,holes_width_dist=PCB_CAMERA_HOLES_WIDTH,holes_standard=SCREW_STANDARD_M2);
+    
+	difference(){
+		union(){
+			for(i=[-1,1]){
+				top_plate_pcb_leg(offset_X=-TOP_PANEL_DIST+i*PCB_CAMERA_HOLES_LENGTH/2);}
+		}
+		union(){
+			translate([-TOP_PANEL_DIST,0,0])  top_plate_pcb_do_traps(is_explode=0,mode=PCB_MODE_SHIFTED_FROM_TOP_HOLES,holes_length_dist=PCB_CAMERA_HOLES_LENGTH,holes_width_dist=PCB_CAMERA_HOLES_WIDTH,holes_standard=SCREW_STANDARD_M2,thickness=TOP_PLATE_PCB_PUSH_LIFT);
+		}
+	}
+}
 module top_plate_pcbs(){
 	//PCB full
 	PCB_FULL_RIGHT_OFFSET1=15;
 	PCB_FULL_RIGHT_OFFSET2=42;
+    
+    PCB_FULL_LEFT_OFFSET1=-18;
+	PCB_FULL_LEFT_OFFSET2=-70;
+    PCB_FULL_LEFT_OFFSET3=-90;
+	PCB_FULL_LEFT_OFFSET4=-140;
 	difference(){
 		union(){
+            top_plate_pcb_leg(offset_X=PCB_FULL_LEFT_OFFSET1);
+			top_plate_pcb_leg(offset_X=PCB_FULL_LEFT_OFFSET2);
+            top_plate_pcb_leg(offset_X=PCB_FULL_LEFT_OFFSET3);
+			top_plate_pcb_leg(offset_X=PCB_FULL_LEFT_OFFSET4);
 			top_plate_pcb_leg(offset_X=PCB_FULL_RIGHT_OFFSET1);
 			top_plate_pcb_leg(offset_X=PCB_FULL_RIGHT_OFFSET2);
 		}
 		union(){
+            top_plate_pcb__leg_trap(offset_X=PCB_FULL_LEFT_OFFSET1,is_explode=0);
+			top_plate_pcb__leg_trap(offset_X=PCB_FULL_LEFT_OFFSET2,is_explode=0);
+            top_plate_pcb__leg_trap(offset_X=PCB_FULL_LEFT_OFFSET3,is_explode=0);
+			top_plate_pcb__leg_trap(offset_X=PCB_FULL_LEFT_OFFSET4,is_explode=0);
 			top_plate_pcb__leg_trap(offset_X=PCB_FULL_RIGHT_OFFSET1,is_explode=0);
 			top_plate_pcb__leg_trap(offset_X=PCB_FULL_RIGHT_OFFSET2,is_explode=0);
 		}
@@ -106,17 +143,10 @@ module top_plate_pcbs(){
 		}
 	}
 	//PCB camera
-	difference(){
-		union(){
-			for(i=[-1,1]){
-				top_plate_pcb_leg(offset_X=-TOP_PANEL_DIST+i*PCB_CAMERA_HOLES_LENGTH/2);}
-		}
-		union(){
-			translate([-TOP_PANEL_DIST,PCB_PUSHBUTTON_WIDTH/2-local_width/2+TOP_PANEL_THICKNESS,-HDMI_COVER_HEIGHT/2+TOP_PLATE_PCB_PUSH_LIFT/2]) rotate([180,0,0]) top_plate_pcb_do_traps(is_explode=0,mode=PCB_MODE_SHIFTED_FROM_TOP_HOLES,holes_length_dist=PCB_CAMERA_HOLES_LENGTH,holes_width_dist=PCB_CAMERA_HOLES_WIDTH,holes_standard=SCREW_STANDARD_M2,thickness=TOP_PLATE_PCB_PUSH_LIFT);
-		}
-	}
-	translate([-TOP_PANEL_DIST,0,-HDMI_COVER_HEIGHT/2-PCB_CAMERA_THICKNESS/2]) color([0,1,0])
-	top_plate_pcb_with_holes(mode=PCB_MODE_SHIFTED_FROM_TOP_HOLES,length=PCB_CAMERA_LENGTH,width=PCB_CAMERA_WIDTH,thickness=PCB_CAMERA_THICKNESS,holes_length_dist=PCB_CAMERA_HOLES_LENGTH,holes_width_dist=PCB_CAMERA_HOLES_WIDTH,holes_standard=SCREW_STANDARD_M2);	
+    top_plate_pcb_camera_assembly();
+    
+		
+    
 }
 module top_plate_center_join()
 {
@@ -169,6 +199,19 @@ module top_plate_right()
 		top_plate();
 	}
 }
+module top_plate_test_pcb_assembly()
+{
+	temp=0;
+	intersection(){
+		translate([-50,3,local_height/2]) #cube([29,30,local_height],center=true);
+        union(){
+            translate([0,0,local_height/2]) top_plate_pcb_camera_assembly();
+            translate([-50,17,TOP_PLATE_PCB_PUSH_LIFT/2]) cube([30,10,TOP_PLATE_PCB_PUSH_LIFT],center=true);
+            translate([-50,-12,TOP_PLATE_PCB_PUSH_LIFT/2]) cube([30,10,TOP_PLATE_PCB_PUSH_LIFT],center=true);
+        }
+	}
+    
+}
 module top_plate_assembly()
 {
 	translate([0,-local_width/2-HDMI_HOLES_WIDTH/2-SCREW_STANDARD_M3*3-GAP_MAINSCREWS_HDMI-BASE_OUTERPAD_HDMI,local_height]) rotate([180,0,0]) top_plate();
@@ -177,8 +220,8 @@ local_length_left=HDMI_HOLES_LENGTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+B
 local_length_right=HDMI_HOLES_LENGTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)+PILLARS_THICKNESS+SIDE_PANEL_EXTENSION_WIDTH;
 local_width=TOP_PANEL_EXTENSION_WITDH+PILLARS_THICKNESS;
 local_height=HDMI_COVER_HEIGHT;
-//top_plate_pcb_with_holes(mode=PCB_MODE_SYMMETRIC_HOLES,length=PCB_PUSHBUTTON_LENGTH,width=PCB_PUSHBUTTON_WIDTH,thickness=0.6,holes_length_dist=PCB_PUSHBUTTON_HOLES_LENGTH,holes_width_dist=PCB_PUSHBUTTON_HOLES_WIDTH,holes_standard=SCREW_STANDARD_M2);
+
 top_plate();
-//top_plate_pcb_with_holes(mode=PCB_MODE_SYMMETRIC_HOLES,length=PCB_PUSHBUTTON_LENGTH,width=PCB_PUSHBUTTON_WIDTH,thickness=PCB_PUSHBUTTON_THICKNESS,holes_length_dist=PCB_PUSHBUTTON_LENGTH-5,holes_width_dist=PCB_PUSHBUTTON_WIDTH-5,holes_standard=SCREW_STANDARD_M2);
+//top_plate_left();
 //top_plate_right();
-//top_plate_right();
+//top_plate_test_pcb_assembly();
