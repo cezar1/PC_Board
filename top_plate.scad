@@ -203,11 +203,12 @@ module top_plate_test_pcb_assembly()
 {
 	temp=0;
 	intersection(){
-		translate([-50,3,local_height/2]) #cube([29,30,local_height],center=true);
+        shrink=5;
+		translate([-50,3,local_height/2-shrink/2]) #cube([29,30,local_height-shrink],center=true);
         union(){
             translate([0,0,local_height/2]) top_plate_pcb_camera_assembly();
             translate([-50,17,TOP_PLATE_PCB_PUSH_LIFT/2]) cube([30,10,TOP_PLATE_PCB_PUSH_LIFT],center=true);
-            translate([-50,-12,TOP_PLATE_PCB_PUSH_LIFT/2]) cube([30,10,TOP_PLATE_PCB_PUSH_LIFT],center=true);
+            translate([-50,-13,TOP_PLATE_PCB_PUSH_LIFT/2]) cube([30,10,TOP_PLATE_PCB_PUSH_LIFT],center=true);
         }
 	}
     
@@ -221,7 +222,7 @@ local_length_right=HDMI_HOLES_LENGTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+
 local_width=TOP_PANEL_EXTENSION_WITDH+PILLARS_THICKNESS;
 local_height=HDMI_COVER_HEIGHT;
 
-top_plate();
-//top_plate_left();
+//top_plate();
+top_plate_left();
 //top_plate_right();
 //top_plate_test_pcb_assembly();
