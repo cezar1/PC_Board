@@ -1,12 +1,15 @@
 include <../utils/hex_trap.scad>;
 use <../utils/adapter0.scad>;
 use <../battery.scad>;
+use <../antenna_connector.scad>;
+
 EXPLODE=0;
 exploded = $exploded == undef ? 0 : $exploded; // 1 for exploded view
 EXPLODE_LENGTH1=30; 
 //Screw standards
 SCREW_STANDARD_M2=2;
 SCREW_STANDARD_M3=3;
+SCREW_STANDARD_M6=6;
 NUT_HEIGHT_M2=1.6;
 NUT_HEIGHT_M3=2.5;
 
@@ -145,3 +148,10 @@ OUTER_BATTERY_SUPPORT_WIDTH=BATT_WIDTH+OUTER_BATTERY_WIDTH_WRAP;
 OUTER_CORNER_INTERFACE_WIDTH=7;
 
 OUTER_BATTERY_BUILD_INTO=10;
+
+//ANTENNA
+ANTENNA_CASE_LENGTH=30;
+ANTENNA_CASE_WIDTH=10;
+ANTENNA_CASE_HEIGHT=10;
+ANTENNA_CONNECTOR_RADIUS=SCREW_STANDARD_M6/2;
+ANTENNA_CONNECTOR_HEIGHT=20;
