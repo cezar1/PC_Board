@@ -83,8 +83,12 @@ module corner_right_bottom()
 }
 module corner_right_top()
 {
-	corner(length1=-1+TOP_PANEL_EXTENSION_WITDH+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,length2=-1+SIDE_PANEL_EXTENSION_WIDTH+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,top1=0,top2=0,height=PILLARS_HEIGHT,config1=OUTER_CORNER_CONFIG_NONE,config2=OUTER_CORNER_CONFIG_NONE);   
-    translate([0,30,15]) rotate([0,0,0])  antenna_connector_case();
+    difference()
+    {
+        corner(length1=-1+TOP_PANEL_EXTENSION_WITDH+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,length2=-1+SIDE_PANEL_EXTENSION_WIDTH+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,top1=0,top2=0,height=PILLARS_HEIGHT,config1=OUTER_CORNER_CONFIG_NONE,config2=OUTER_CORNER_CONFIG_NONE);   
+        translate([ANTENNA_CASE_LENGTH/2,30,PILLARS_HEIGHT/2-ANTENNA_CASE_HEIGHT/2]) rotate([0,0,180])antenna_connector_case();
+    }
+        translate([ANTENNA_CASE_LENGTH/2,30,PILLARS_HEIGHT/2-ANTENNA_CASE_HEIGHT/2]) rotate([0,0,180])  antenna_part();
 }
 module corners_assembly()
 {
