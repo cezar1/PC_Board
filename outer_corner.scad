@@ -81,6 +81,11 @@ module corner_right_bottom()
 {
 	corner(length1=-1+SIDE_PANEL_EXTENSION_WIDTH+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,length2=-1+BOTTOM_PANEL_EXTENSION_WITDH+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,top1=0,top2=0,height=PILLARS_HEIGHT,config1=OUTER_CORNER_CONFIG_NONE,config2=OUTER_CORNER_CONFIG_NONE);    
 }
+module corner_left_top()
+{  
+    corner(length1=-1+SIDE_PANEL_EXTENSION_WIDTH_BATTERY+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,length2=-1+TOP_PANEL_EXTENSION_WITDH+PILLARS_THICKNESS*3+OUTER_SHELL_THICKNESS,top1=0,top2=0,height=PILLARS_HEIGHT,config1=OUTER_CORNER_CONFIG_NONE,config2=OUTER_CORNER_CONFIG_NONE);   
+        
+}
 module corner_right_top()
 {
     difference()
@@ -93,6 +98,7 @@ module corner_right_top()
 module corners_assembly()
 {
 	translate([0,0,PILLARS_HEIGHT/2+HDMI_COVER_HEIGHT]){
+        //BOTTOM LEFT
 		corner_bottom_left_x=-HDMI_HOLES_LENGTH/2-(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)-PILLARS_THICKNESS-SIDE_PANEL_EXTENSION_WIDTH_BATTERY-OUTER_SHELL_THICKNESS;
 		corner_bottom_left_y=0+HDMI_HOLES_WIDTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)+PILLARS_THICKNESS+BOTTOM_PANEL_EXTENSION_WITDH+OUTER_SHELL_THICKNESS;
 		difference(){
@@ -107,7 +113,15 @@ module corners_assembly()
 		corner_top_right_y=0-HDMI_HOLES_WIDTH/2-(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)-PILLARS_THICKNESS-TOP_PANEL_EXTENSION_WITDH-OUTER_SHELL_THICKNESS;
 		translate([corner_top_right_x,corner_top_right_y,0]) rotate ([180,180,0]) rotate([0,0,-90]) corner_right_top();
         
+	
+    //Corner left top
+    corner_top_left_x=-HDMI_HOLES_LENGTH/2-(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)-PILLARS_THICKNESS-SIDE_PANEL_EXTENSION_WIDTH_BATTERY-OUTER_SHELL_THICKNESS;
+		corner_top_left_y=0-HDMI_HOLES_WIDTH/2-(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)-PILLARS_THICKNESS-TOP_PANEL_EXTENSION_WITDH-OUTER_SHELL_THICKNESS;
+		translate([corner_top_left_x,corner_top_left_y,0]) rotate ([180,180,0]) rotate([0,0,180]) corner_left_top();
+        
 		//translate([0,0,-PILLARS_HEIGHT/2]) battery_assembly(clearance=10);
+    
+    //BOTTOM PLATE
 		extra=-5;
 		plate_bottom_left_x=0;
 		plate_bottom_left_y=extra+HDMI_HOLES_WIDTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)+PILLARS_THICKNESS+BOTTOM_PANEL_EXTENSION_WITDH+OUTER_SHELL_THICKNESS/2;    
@@ -116,5 +130,6 @@ module corners_assembly()
 }
 //corner_batt_bottom();
 //corner_right_bottom();
-rotate ([0,180,0]) corner_right_top();
+//rotate ([0,180,0]) corner_right_top();
+corner_left_top();
 //corners_assembly();
