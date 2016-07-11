@@ -116,5 +116,5 @@ module corners_assembly()
 }
 //corner_batt_bottom();
 //corner_right_bottom();
-corner_right_top();
+rotate ([0,180,0]) corner_right_top();
 //corners_assembly();

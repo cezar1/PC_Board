@@ -1,10 +1,10 @@
 function make_r_for_screw_standard(r_trap) =
-((r_trap==2) ? 2.2 : (r_trap==2.5) ? 2.5 : (r_trap==3) ? 3.35 : (r_trap==4) ? 4.2 : r_trap);
+((r_trap==2) ? 2.2 : (r_trap==2.5) ? 2.5 : (r_trap==3) ? 3.35 : (r_trap==4) ? 4.2 : (r_trap==6) ? 4.8 : r_trap);
 //Utimaker 2 @ ESOC
 //((r_trap==2) ? 2.2 : (r_trap==2.5) ? 2.5 : (r_trap==3) ? 3.2 : (r_trap==4) ? 4.2 : r_trap);
 
 function make_r_hole_for_screw_standard(r_trap) =
-((r_trap==2) ? 1.1 : (r_trap==2.5) ? 1.5 : (r_trap==3) ? 1.75 : (r_trap==4) ? 2.5 : r_trap);
+((r_trap==2) ? 1.1 : (r_trap==2.5) ? 1.5 : (r_trap==3) ? 1.75 : (r_trap==4) ? 2.5 : (r_trap==6) ? 3.4 : r_trap);
 //Ultimaker2 @ ESOC
 //((r_trap==2) ? 1.5 : (r_trap==2.5) ? 2 : (r_trap==3) ? 2 : (r_trap==4) ? 2.5 : r_trap);
 module low_level_hex_hole(h_trap,h_hole,local_r_trap,local_r_hole,rot)
