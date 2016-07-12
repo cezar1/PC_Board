@@ -2,15 +2,29 @@ $exploded=0;
 include <configuration/general.scad>;
 module outer_corner_plate(length,width,thickness,config)
 {
-	cube([length,thickness,width],center=true); 
-	for (j=[-1,1]){
-		for (i=[-1,1]){
-			translate([j*(length/2+PILLARS_THICKNESS/2),-OUTER_SHELL_THICKNESS/4,i*PILLARS_HEIGHT/PILLARS_TRAPS_HEIGHT_RATIO]) cube([PILLARS_THICKNESS,OUTER_SHELL_THICKNESS/2,OUTER_CORNER_INTERFACE_WIDTH],center=true);
-		}
-	}
-	if (config==OUTER_CORNER_CONFIG_PLATE_BOTTOM)
-	{;
-	}
+    difference(){
+        union(){
+            cube([length,thickness,width],center=true); 
+            for (j=[-1,1]){
+                for (i=[-1,1]){
+                    translate([j*(length/2+PILLARS_THICKNESS/2),-OUTER_SHELL_THICKNESS/4,i*PILLARS_HEIGHT/PILLARS_TRAPS_HEIGHT_RATIO]) cube([PILLARS_THICKNESS,OUTER_SHELL_THICKNESS/2,OUTER_CORNER_INTERFACE_WIDTH],center=true);
+                    
+                }
+            }
+        }
+        union(){
+            
+            if (config==OUTER_CORNER_CONFIG_PLATE_BOTTOM)
+            {
+                translate([0,-thickness/4-0.1,0])cube([length-OUTER_SHELL_THICKNESS*2,thickness/2+0.2,width-OUTER_SHELL_THICKNESS*2],center=true);
+                for (j=[-1,1]){
+                    for (i=[-1,1]){
+                        translate([j*(length/2+PILLARS_THICKNESS/2),0.1,i*PILLARS_HEIGHT/PILLARS_TRAPS_HEIGHT_RATIO]) rotate ([0,90,90]) hex_hole(h_trap=0,h_hole=OUTER_SHELL_THICKNESS+0.2,r_trap=SCREW_STANDARD_M3,rot=180);
+                    }
+                }
+            }
+        }
+    }
 }
 module outer_corner_panel_wall_holes(is_explode,interface_side)
 {
@@ -100,10 +114,11 @@ module outer_corner_bottom_plate()
     extra=-5;
 		plate_bottom_left_x=0;
 		plate_bottom_left_y=extra+HDMI_HOLES_WIDTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)+PILLARS_THICKNESS+BOTTOM_PANEL_EXTENSION_WITDH+OUTER_SHELL_THICKNESS/2;    
-    difference(){
+    
 		translate([plate_bottom_left_x,plate_bottom_left_y,0]) outer_corner_plate(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_BOTTOM);
-        translate([plate_bottom_left_x,plate_bottom_left_y-OUTER_SHELL_THICKNESS/2,0]) outer_corner_plate(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS-OUTER_SHELL_THICKNESS,width=PILLARS_HEIGHT-OUTER_SHELL_THICKNESS,thickness=OUTER_SHELL_THICKNESS/2,config=OUTER_CORNER_CONFIG_PLATE_BOTTOM);
-    }
+        
+    
+    
 	
 }
 module corners_assembly()
