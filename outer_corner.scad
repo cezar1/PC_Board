@@ -8,7 +8,29 @@ module outer_corner_plate(length,width,thickness,config)
             for (j=[-1,1]){
                 for (i=[-1,1]){
                     translate([j*(length/2+PILLARS_THICKNESS/2),-OUTER_SHELL_THICKNESS/4,i*PILLARS_HEIGHT/PILLARS_TRAPS_HEIGHT_RATIO]) cube([PILLARS_THICKNESS,OUTER_SHELL_THICKNESS/2,OUTER_CORNER_INTERFACE_WIDTH],center=true);
-                    
+            if (config==OUTER_CORNER_CONFIG_PLATE_BOTTOM){
+                //SUPPORT LEGS
+                BOTTOM_PLATE_SUPPORT_LEGS_WIDTH=10;
+                BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT=10;
+                BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH=25;
+                BOTTOM_PLATE_SUPPORT_LEGS_ANGLE=20;
+                for (i=[-1,1]){
+                    translate([i*length/2-i*BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/2,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2+OUTER_SHELL_THICKNESS/2,0]) {
+                        
+                        difference(){
+                            union(){
+                                cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT,PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2],center=true);
+                                
+                            }
+                            union(){
+                                cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/2,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2,PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2+0.2],center=true);
+                                translate([0,0,-i*(PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2)/2])rotate([i*BOTTOM_PLATE_SUPPORT_LEGS_ANGLE,0,0])cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT,PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2],center=true);
+                                translate([0,0,i*(PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2)/2])rotate([-i*BOTTOM_PLATE_SUPPORT_LEGS_ANGLE,0,0])cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT,PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2],center=true);
+                            }
+                        }
+                    }
+                }
+            }
                 }
             }
         }
@@ -155,4 +177,5 @@ module corners_assembly()
 //corner_right_bottom();
 //rotate ([0,180,0]) corner_right_top();
 //corner_left_top();
-corners_assembly();
+//corners_assembly();
+outer_corner_bottom_plate();
