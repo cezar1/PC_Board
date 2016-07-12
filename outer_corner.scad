@@ -95,6 +95,17 @@ module corner_right_top()
     }
         translate([ANTENNA_CASE_LENGTH/2,30,PILLARS_HEIGHT/2-ANTENNA_CASE_HEIGHT/2]) rotate([0,0,180])  antenna_part();
 }
+module outer_corner_bottom_plate()
+{
+    extra=-5;
+		plate_bottom_left_x=0;
+		plate_bottom_left_y=extra+HDMI_HOLES_WIDTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)+PILLARS_THICKNESS+BOTTOM_PANEL_EXTENSION_WITDH+OUTER_SHELL_THICKNESS/2;    
+    difference(){
+		translate([plate_bottom_left_x,plate_bottom_left_y,0]) outer_corner_plate(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_BOTTOM);
+        translate([plate_bottom_left_x,plate_bottom_left_y-OUTER_SHELL_THICKNESS/2,0]) outer_corner_plate(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS-OUTER_SHELL_THICKNESS,width=PILLARS_HEIGHT-OUTER_SHELL_THICKNESS,thickness=OUTER_SHELL_THICKNESS/2,config=OUTER_CORNER_CONFIG_PLATE_BOTTOM);
+    }
+	
+}
 module corners_assembly()
 {
 	translate([0,0,PILLARS_HEIGHT/2+HDMI_COVER_HEIGHT]){
@@ -122,14 +133,11 @@ module corners_assembly()
 		//translate([0,0,-PILLARS_HEIGHT/2]) battery_assembly(clearance=10);
     
     //BOTTOM PLATE
-		extra=-5;
-		plate_bottom_left_x=0;
-		plate_bottom_left_y=extra+HDMI_HOLES_WIDTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)+PILLARS_THICKNESS+BOTTOM_PANEL_EXTENSION_WITDH+OUTER_SHELL_THICKNESS/2;    
-		translate([plate_bottom_left_x,plate_bottom_left_y,0]) outer_corner_plate(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_BOTTOM);
-	}
+	outer_corner_bottom_plate();	
+    }
 }
 //corner_batt_bottom();
 //corner_right_bottom();
 //rotate ([0,180,0]) corner_right_top();
-corner_left_top();
-//corners_assembly();
+//corner_left_top();
+corners_assembly();
