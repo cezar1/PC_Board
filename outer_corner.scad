@@ -1,22 +1,67 @@
 $exploded=0;
 include <configuration/general.scad>;
+module outer_corner_bottom_angles()
+{
+    for (j=[-1,1]){
+        translate([j*length/2-j*BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/2,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2+OUTER_SHELL_THICKNESS/2,0]){
+    translate([0,0,-j*(PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2)/2])rotate([j*BOTTOM_PLATE_SUPPORT_LEGS_ANGLE,0,0])cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT,PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2],center=true);
+                                translate([0,0,j*(PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2)/2])rotate([-j*BOTTOM_PLATE_SUPPORT_LEGS_ANGLE,0,0])cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT,PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2],center=true);}
+    }
+}
+module outer_corner_bottom_blocks()
+{
+    for (i=[-1,1]){
+        for(j=[-1,1]){
+            color([1,0,0]) translate([i*(length/2-BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/2),OUTER_SHELL_THICKNESS,j*(width/2-BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/2)]) #cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH,OUTER_SHELL_THICKNESS+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT,BOTTOM_PLATE_SUPPORT_LEGS_WIDTH],center=true);
+        }
+    }
+}
+module outer_corner_bottom_holes()
+{
+    for (i=[-1,1]){
+        for(j=[-1,1]){
+            color([1,0,0]) translate([i*(length/2-BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/2),(OUTER_SHELL_THICKNESS+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT-NUT_HEIGHT_M3+0.1),j*(width/2-BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/2)]) rotate([-90,0,0]) hex_hole(h_trap=NUT_HEIGHT_M3+0.1,h_hole=0.1+(OUTER_SHELL_THICKNESS+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT)-NUT_HEIGHT_M3,r_trap=SCREW_STANDARD_M3,rot=180);
+        }
+    }
+    outer_corner_bottom_holes2(length=length,width=width);
+}
+module outer_corner_bottom_holes2()
+{
+    for (i=[-1,1]){
+        for(j=[-1,1]){
+            color([1,1,0]) translate([i*(length/2-BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/2),(OUTER_SHELL_THICKNESS+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT-NUT_HEIGHT_M3+0.1),j*(width/2-BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/2)]) rotate([-90,0,0]) hex_hole(h_trap=OUTER_SHELL_THICKNESS+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT-SCREW_STANDARD_M3_SCREW_HEIGHT1,h_hole=0,r_trap=SCREW_STANDARD_M3,rot=180);
+        }
+    }
+}
 module outer_corner_plate(length,width,thickness,config)
 {
+    
+    if (config==OUTER_CORNER_CONFIG_PLATE_BOTTOM){
+        difference(){
+            outer_corner_bottom_blocks(length=length,width=width);
+            
+            outer_corner_bottom_holes(length=length,width=width); 
+        }
+    }
     difference(){
         union(){
-            cube([length,thickness,width],center=true); 
+            cube([length,thickness,width],center=true);
+           
+            
+            
             for (j=[-1,1]){
                 for (i=[-1,1]){
                     translate([j*(length/2+PILLARS_THICKNESS/2),-OUTER_SHELL_THICKNESS/4,i*PILLARS_HEIGHT/PILLARS_TRAPS_HEIGHT_RATIO]) cube([PILLARS_THICKNESS,OUTER_SHELL_THICKNESS/2,OUTER_CORNER_INTERFACE_WIDTH],center=true);
             if (config==OUTER_CORNER_CONFIG_PLATE_BOTTOM){
+                
                 //SUPPORT LEGS
-                BOTTOM_PLATE_SUPPORT_LEGS_WIDTH=10;
-                BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT=10;
-                BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH=25;
-                BOTTOM_PLATE_SUPPORT_LEGS_ANGLE=20;
+                
                 for (i=[-1,1]){
                     translate([i*length/2-i*BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/2,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2+OUTER_SHELL_THICKNESS/2,0]) {
-                        
+                    for (j=[-1,1]){    
+                        //j=-1;
+                    translate([0,0,j*(PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2-BOTTOM_PLATE_SUPPORT_LEGS_WIDTH)/2]) cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT,BOTTOM_PLATE_SUPPORT_LEGS_WIDTH],center=true);
+                    }
                         difference(){
                             union(){
                                 cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT,PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2],center=true);
@@ -24,8 +69,7 @@ module outer_corner_plate(length,width,thickness,config)
                             }
                             union(){
                                 cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/2,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2,PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2+0.2],center=true);
-                                translate([0,0,-i*(PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2)/2])rotate([i*BOTTOM_PLATE_SUPPORT_LEGS_ANGLE,0,0])cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT,PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2],center=true);
-                                translate([0,0,i*(PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2)/2])rotate([-i*BOTTOM_PLATE_SUPPORT_LEGS_ANGLE,0,0])cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT,PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2],center=true);
+                                
                             }
                         }
                     }
@@ -38,8 +82,11 @@ module outer_corner_plate(length,width,thickness,config)
             
             if (config==OUTER_CORNER_CONFIG_PLATE_BOTTOM)
             {
+                outer_corner_bottom_holes(length=length,width=width);
+                outer_corner_bottom_angles(length=length);
                 translate([0,-thickness/4-0.1,0])cube([length-OUTER_SHELL_THICKNESS*2,thickness/2+0.2,width-OUTER_SHELL_THICKNESS*2],center=true);
                 for (j=[-1,1]){
+                    
                     for (i=[-1,1]){
                         translate([j*(length/2+PILLARS_THICKNESS/2),0.1,i*PILLARS_HEIGHT/PILLARS_TRAPS_HEIGHT_RATIO]) rotate ([0,90,90]) hex_hole(h_trap=0,h_hole=OUTER_SHELL_THICKNESS+0.2,r_trap=SCREW_STANDARD_M3,rot=180);
                     }
@@ -133,7 +180,7 @@ module corner_right_top()
 }
 module outer_corner_bottom_plate()
 {
-    extra=-5;
+    extra=0;
 		plate_bottom_left_x=0;
 		plate_bottom_left_y=extra+HDMI_HOLES_WIDTH/2+(SCREW_STANDARD_M3*3+GAP_MAINSCREWS_HDMI+BASE_OUTERPAD_HDMI)+PILLARS_THICKNESS+BOTTOM_PANEL_EXTENSION_WITDH+OUTER_SHELL_THICKNESS/2;    
     
@@ -173,9 +220,26 @@ module corners_assembly()
 	outer_corner_bottom_plate();	
     }
 }
+module outer_corner_bottom_plate_only_plate()
+{
+    intersection(){
+    outer_corner_plate(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_BOTTOM);
+        #cube([HDMI_HOLES_LENGTH-PILLARS_THICKNESS+OUTER_BATTERY_BUILD_INTO*2,OUTER_SHELL_THICKNESS,PILLARS_HEIGHT],center=true);
+    }
+    
+}
+module outer_corner_bottom_plate_only_legs()
+{
+    intersection(){
+    outer_corner_plate(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_BOTTOM);
+        translate([(HDMI_HOLES_LENGTH-PILLARS_THICKNESS)/2,0.001+OUTER_SHELL_THICKNESS/2+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT/2,0])#cube([HDMI_HOLES_LENGTH-PILLARS_THICKNESS,BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT,PILLARS_HEIGHT+BOTTOM_PLATE_SUPPORT_LEGS_EXTRA_LENGTH*2],center=true);
+    }
+    
+}
 //corner_batt_bottom();
 //corner_right_bottom();
 //rotate ([0,180,0]) corner_right_top();
 //corner_left_top();
 //corners_assembly();
-outer_corner_bottom_plate();
+//outer_corner_bottom_plate_only_plate();
+outer_corner_bottom_plate_only_legs();
