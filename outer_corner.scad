@@ -380,9 +380,9 @@ module outer_corner_bottom_plate_only_legs()
 //corner_right_bottom();
 //rotate ([0,180,0]) corner_right_top();
 //corner_left_top();
-//corners_assembly();
+corners_assembly();
 //outer_corner_bottom_plate_only_plate();
 //outer_corner_bottom_plate_only_legs();
 //rotate([-90,0,0]) outer_corner_plate(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_TOP);
 //rotate ([-90,0,0]) outer_corner_plate(length=HDMI_HOLES_WIDTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_LEFT);
-rotate ([-90,0,0]) outer_corner_plate(length=HDMI_HOLES_WIDTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_RIGHT);
+//rotate ([-90,0,0]) outer_corner_plate(length=HDMI_HOLES_WIDTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_RIGHT);
