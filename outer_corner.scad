@@ -100,7 +100,11 @@ module outer_corner_plate(length,width,thickness,config)
             
             outer_corner_bottom_holes(length=length,width=width); 
         }
+    for (i=[-2,-1,0,1,2]){
+        translate([i*(length)/6,0,0]) cube([BOTTOM_PLATE_SUPPORT_LEGS_WIDTH/4,thickness,width],center=true);
     }
+    }
+    
     difference(){
         union(){
             
