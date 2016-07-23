@@ -38,14 +38,14 @@ module outer_corner_top_plate_handle_blocks(length,width,dist1,dist2)
 {
     for (j=[-1,1]){
         for(i=[-1,1]){
-            color([0,1,0]) translate([i*TOP_HANDLE_DIST1/2,j*TOP_HANDLE_DIST2/2,0]) cube([SCREW_STANDARD_M3*4,SCREW_STANDARD_M3*4,OUTER_SHELL_THICKNESS],center=true);
+            color([0,1,0]) translate([i*dist1/2,j*dist2/2,0]) cube([SCREW_STANDARD_M3*4,SCREW_STANDARD_M3*4,OUTER_SHELL_THICKNESS],center=true);
         }
     }
 }
 module outer_corner_top_plate_handle_blocks2only(length,width,dist1,dist2,i)
 {
     for (j=[-1,1]){
-            color([0,1,0]) translate([i*TOP_HANDLE_DIST1/2,j*TOP_HANDLE_DIST2/2,0]) cube([SCREW_STANDARD_M3*4,SCREW_STANDARD_M3*4,OUTER_SHELL_THICKNESS],center=true);
+            color([0,1,0]) translate([i*dist1/2,j*dist2/2,0]) cube([SCREW_STANDARD_M3*4,SCREW_STANDARD_M3*4,OUTER_SHELL_THICKNESS],center=true);
     }
 }
 module outer_corner_top_plate_handle_holes_squares(length,width,dist1,dist2)
@@ -53,7 +53,7 @@ module outer_corner_top_plate_handle_holes_squares(length,width,dist1,dist2)
     
     for (j=[-1,1]){
         for(i=[-1,1]){
-            color([0,0,1]) translate([i*TOP_HANDLE_DIST1/2,j*TOP_HANDLE_DIST2/2,0]) cube([SCREW_STANDARD_M3*2+0.5,SCREW_STANDARD_M3*2+0.5,OUTER_SHELL_THICKNESS+0.2+TOP_HANDLE_LIFT1],center=true);
+            color([0,0,1]) translate([i*dist1/2,j*dist2/2,0]) cube([SCREW_STANDARD_M3*2+0.5,SCREW_STANDARD_M3*2+0.5,OUTER_SHELL_THICKNESS+0.2+TOP_HANDLE_LIFT1],center=true);
         }
     }
 }
@@ -62,24 +62,24 @@ module outer_corner_top_plate_handle_holes(length,width,dist1,dist2)
     
     for (j=[-1,1]){
         for(i=[-1,1]){
-            color([0,0,1]) translate([i*TOP_HANDLE_DIST1/2,j*TOP_HANDLE_DIST2/2,0]) hex_hole(h_trap=0,h_hole=OUTER_SHELL_THICKNESS+0.2+TOP_HANDLE_LIFT1,r_trap=SCREW_STANDARD_M3,rot=180);
+            color([0,0,1]) translate([i*dist1/2,j*dist2/2,0]) hex_hole(h_trap=0,h_hole=OUTER_SHELL_THICKNESS+0.2+TOP_HANDLE_LIFT1,r_trap=SCREW_STANDARD_M3,rot=180);
         }
     }
 }
-module outer_corner_top_plate_blocks()
+module outer_corner_top_plate_blocks(dist1,dist2)
 {
     for (j=[-1,1]){
         for(i=[-1,1]){
-            color([0,1,0]) translate([i*TOP_HANDLE_DIST1/2,0,j*TOP_HANDLE_DIST2/2]) cube([SCREW_STANDARD_M3*4,OUTER_SHELL_THICKNESS,SCREW_STANDARD_M3*4],center=true);
+            color([0,1,0]) translate([i*dist1/2,0,j*dist2/2]) cube([SCREW_STANDARD_M3*4,OUTER_SHELL_THICKNESS,SCREW_STANDARD_M3*4],center=true);
         }
     }
 
 }
-module outer_corner_top_plate_holes()
+module outer_corner_top_plate_holes(dist1,dist2)
 {
     for (j=[-1,1]){
         for(i=[-1,1]){
-            color([1,0,0]) translate([i*TOP_HANDLE_DIST1/2,(OUTER_SHELL_THICKNESS+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT-NUT_HEIGHT_M3+0.1),j*TOP_HANDLE_DIST2/2]) rotate([-90,0,0]) hex_hole(h_trap=NUT_HEIGHT_M3+0.1,h_hole=0.1+(OUTER_SHELL_THICKNESS+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT)-NUT_HEIGHT_M3,r_trap=SCREW_STANDARD_M3,rot=180);
+            color([1,0,0]) translate([i*dist1/2,(OUTER_SHELL_THICKNESS+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT-NUT_HEIGHT_M3+0.1),j*dist2/2]) rotate([-90,0,0]) hex_hole(h_trap=NUT_HEIGHT_M3+0.1,h_hole=0.1+(OUTER_SHELL_THICKNESS+BOTTOM_PLATE_SUPPORT_LEGS_HEIGHT)-NUT_HEIGHT_M3,r_trap=SCREW_STANDARD_M3,rot=180);
         }
     }
 
@@ -103,7 +103,7 @@ module outer_corner_bottom_holes2()
 }
 module outer_corner_handle(length,width,dist1,dist2)
 {
-    local_length=TOP_HANDLE_DIST1+SCREW_STANDARD_M3*2;
+    local_length=dist1+SCREW_STANDARD_M3*2;
     TOP_HANDLE_CUT_BASE=2;
     TOP_HANDLE_BASE_THICKNESS=2;
     //union(){
@@ -125,7 +125,7 @@ module outer_corner_handle(length,width,dist1,dist2)
                difference(){
                    hull()
                    {
-                   translate([i*((TOP_HANDLE_DIST1)/2),0,OUTER_SHELL_THICKNESS/2+TOP_HANDLE_LIFT1]) rotate([0,90,0]) cylinder(r=10,h=SCREW_STANDARD_M3*4,center=true);
+                   translate([i*((dist1)/2),0,OUTER_SHELL_THICKNESS/2+TOP_HANDLE_LIFT1]) rotate([0,90,0]) cylinder(r=10,h=SCREW_STANDARD_M3*4,center=true);
                    translate([0,0,OUTER_SHELL_THICKNESS/2]) outer_corner_top_plate_handle_blocks2only(length=length,width=width,dist1=dist1,dist2=dist2,i=i);
                    }
                    union(){
@@ -157,6 +157,8 @@ translate([0,150,0])#cube([300,300,300],center=true);}
 module outer_corner_plate(length,width,thickness,config)
 {
     if (config==OUTER_CORNER_CONFIG_PLATE_LEFT){
+        //HANDLE
+        rotate([90,0,0]) translate([0,thickness-OUTER_SHELL_THICKNESS/2-2.5,2]) outer_corner_handle(length=length,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,dist1=SIDE_HANDLE_DIST1,dist2=SIDE_HANDLE_DIST2);
         //translate([0,0.1,0])  outer_corner_side_plate_holes(length=length,width=width,dist1=SIDE_HANDLE_DIST1,dist2=SIDE_HANDLE_DIST2)
         difference(){
             outer_corner_side_plate_blocks(length=length,width=width,dist1=SIDE_HANDLE_DIST1,dist2=SIDE_HANDLE_DIST2);
@@ -178,7 +180,7 @@ module outer_corner_plate(length,width,thickness,config)
         difference(){
             translate([0,-OUTER_SHELL_THICKNESS/2,0])outer_corner_top_plate_blocks(length=length,width=width);
             
-            translate([0,-0.2-thickness+NUT_HEIGHT_M3,0]) rotate([0,0,0]) outer_corner_top_plate_holes(length=length,width=width); 
+            translate([0,-0.2-thickness+NUT_HEIGHT_M3,0]) rotate([0,0,0]) outer_corner_top_plate_holes(length=length,width=width,dist1=TOP_HANDLE_DIST1,dist2=TOP_HANDLE_DIST2); 
         }
     }
     if (config==OUTER_CORNER_CONFIG_PLATE_BOTTOM){
@@ -475,8 +477,11 @@ module outer_corner_bottom_plate_only_legs()
 //outer_corner_bottom_plate_only_plate();
 //outer_corner_bottom_plate_only_legs();
 //rotate([-90,0,0]) outer_corner_plate(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_TOP);
+//SIDE PLATE
 //rotate ([-90,0,0]) outer_corner_plate(length=HDMI_HOLES_WIDTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_LEFT);
 //rotate ([-90,0,0]) outer_corner_plate(length=HDMI_HOLES_WIDTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,config=OUTER_CORNER_CONFIG_PLATE_RIGHT);
 //outer_corner_top_plate();
 //TOP HANDLE
-rotate([180,0,0])outer_corner_handle(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,dist1=TOP_HANDLE_DIST1,dist2=TOP_HANDLE_DIST2);
+//rotate([180,0,0])outer_corner_handle(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,dist1=TOP_HANDLE_DIST1,dist2=TOP_HANDLE_DIST2);
+//SIDE HANDLE
+rotate([-180,0,0])  outer_corner_handle(length=HDMI_HOLES_WIDTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,dist1=SIDE_HANDLE_DIST1,dist2=SIDE_HANDLE_DIST2);
