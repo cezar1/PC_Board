@@ -167,6 +167,7 @@ module outer_corner_plate(length,width,thickness,config)
         }
     }
     if (config==OUTER_CORNER_CONFIG_PLATE_RIGHT){
+        rotate([90,0,0]) translate([0,thickness-OUTER_SHELL_THICKNESS/2-2.5,2]) outer_corner_handle(length=length,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,dist1=SIDE_HANDLE_DIST1,dist2=SIDE_HANDLE_DIST2);
         //translate([0,0.1,0])  outer_corner_side_plate_holes(length=length,width=width,dist1=SIDE_HANDLE_DIST1,dist2=SIDE_HANDLE_DIST2)
         difference(){
             outer_corner_side_plate_blocks(length=length,width=width,dist1=SIDE_HANDLE_DIST1,dist2=SIDE_HANDLE_DIST2);
@@ -485,3 +486,4 @@ module outer_corner_bottom_plate_only_legs()
 //rotate([180,0,0])outer_corner_handle(length=HDMI_HOLES_LENGTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,dist1=TOP_HANDLE_DIST1,dist2=TOP_HANDLE_DIST2);
 //SIDE HANDLE
 rotate([-180,0,0])  outer_corner_handle(length=HDMI_HOLES_WIDTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,dist1=SIDE_HANDLE_DIST1,dist2=SIDE_HANDLE_DIST2);
+rotate([180,0,0])  outer_corner_handle(length=HDMI_HOLES_WIDTH-PILLARS_THICKNESS,width=PILLARS_HEIGHT,thickness=OUTER_SHELL_THICKNESS,dist1=SIDE_HANDLE_DIST1,dist2=SIDE_HANDLE_DIST2);
